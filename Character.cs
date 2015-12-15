@@ -61,8 +61,9 @@ public class Character : Scenario {
 	
 	public void Jump()
 	{
-		jumpSound.Play ();
-		rigidPlayer.AddRelativeForce (Vector3.up * 3f, ForceMode2D.Impulse);
+		if (!jumpSound.isPlaying)
+			jumpSound.Play ();
+		rigidPlayer.AddRelativeForce (Vector3.up * 8f, ForceMode2D.Impulse);
 	}
 	
 	public bool isGround()

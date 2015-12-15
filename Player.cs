@@ -18,7 +18,7 @@ public class Player : Character {
 	{
 		base.Start ();
 		//doors = GameObject.FindGameObjectsWithTag ("Door");
-		coll.size = new Vector2(coll.size.x, 4f);
+		coll.size = new Vector2(coll.size.x, 3.2f);
 	}
 	
 	public override void Put()
@@ -31,26 +31,10 @@ public class Player : Character {
 
 	void FixedUpdate()
 	{
-		if (GameObject.FindWithTag ("Left") != null) 
+		if (GameObject.FindWithTag ("Left") == null) 
 		{
-			/*if (Input.GetMouseButton (0)) 
-			{
-				if (GameObject.FindGameObjectWithTag ("Left").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition))
-					Move ("left");
-				else if (GameObject.FindGameObjectWithTag ("Right").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition))
-					Move ("right");
-				else
-					StopWalk();
-			} 
-			else
-				StopWalk ();
-
-			if (Input.GetMouseButtonDown (0) && isGround ()) 
-			{
-				if (GameObject.FindGameObjectWithTag ("Up").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition))
-					Jump ();
-			}
-
+			StopWalk ();
+			/*
 			for (int i = 0, k = doors.Length; i < k; i++)
 			{
 				if (Input.GetMouseButtonDown (0) && this.gameObject.transform.position.x >= doors[i].gameObject.transform.position.x - doors[i].gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2 &&
@@ -61,7 +45,5 @@ public class Player : Character {
 				}
 			}*/
 		}
-		else
-			StopWalk ();
 	}
 }

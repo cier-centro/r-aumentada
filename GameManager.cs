@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
 	private Talk bln;
 	private Ask askAsker;
 	private Background bg;
+	private Columns clm;
 	private Floor fl;
 	private Floor bnd;
 	private Door dr;
@@ -88,6 +89,16 @@ public class GameManager : MonoBehaviour {
 		isTalking = true;
 	}
 
+	void PutColumns()
+	{
+		clm = background.GetComponent<Columns> ();
+		clm.Image = "escenario_colegio_columnas";
+		clm.PosX = 0;
+		clm.PosY = 0;
+		clm.Size = 1.40625f;
+		clm.Put ();
+	}
+
 	void PutBackground()
 	{
 		bg = background.GetComponent<Background> ();
@@ -96,6 +107,7 @@ public class GameManager : MonoBehaviour {
 		bg.PosY = 0;
 		bg.Size = 1f;
 		bg.Put ();
+		PutColumns ();
 	}
 
 	void PutFloor()
@@ -159,7 +171,7 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < 3; i++) 
 		{
 			btn.Image = "Arrows-" + names[i];
-			btn.Size = 0.3f;
+			btn.Size = 0.2f;
 			btn.StrName = names[i];
 			btn.Put();
 		}
@@ -177,7 +189,7 @@ public class GameManager : MonoBehaviour {
 	void PutPlayer()
 	{
 		ply = player.GetComponent<Player> ();
-		ply.Image = "ppal-chico";
+		ply.Image = "PP 01 caminado0003";
 		ply.Size = 1f;
 		ply.PosX = -dr.PosX;
 		ply.PosY = fl.PosY + fl.Height / 2 + ply.ImageSize.y / 2f;
@@ -194,10 +206,10 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			other.name = names[i];
-			other.Size = 1f;
+			other.Size = 0.8f;
 			other.Image = assets[i];
 			other.PosX = positions[i];
-			other.PosY = -2.5f;
+			other.PosY = -2.6f;
 			other.Put();
 		}
 	}
@@ -205,8 +217,8 @@ public class GameManager : MonoBehaviour {
 	void PutBonus(float min, float max)
 	{
 		bns = bonus.GetComponent<Bonus> ();
-		bns.Image = "turtle";
-		bns.Size = 0.1f;
+		bns.Image = "empanada";
+		bns.Size = 1f;
 
 		for (int i = 0; i < 4; i++) 
 		{
@@ -219,7 +231,7 @@ public class GameManager : MonoBehaviour {
 	void PutSound()
 	{
 		backSound = gameObject.AddComponent<AudioSource> ();
-		backSound.clip = Resources.Load ("introjuego") as AudioClip;
+		backSound.clip = Resources.Load ("incidental01") as AudioClip;
 		backSound.loop = true;
 		backSound.Play ();
 	}
