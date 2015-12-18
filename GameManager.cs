@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 		{	
 			if (put)
 			{
-				bln.Image = "balloon";
+				bln.Image = "globo 01";
 				bln.PosX = GameObject.Find(P[i] + "(Clone)").gameObject.transform.position.x;
 				bln.PosY = -1f;
 				bln.Size = 1.7f;
@@ -82,10 +82,10 @@ public class GameManager : MonoBehaviour {
 	{
 		RemoveButtons ();
 		askAsker = askChar.GetComponent<Ask>();
-		askAsker.Image = "dog2";
+		askAsker.Image = "globo 02";
 		askAsker.Put ();
 		globoSound.Play ();
-		StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (1.5f, textTop));
+		StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (2f, textTop));
 		isTalking = true;
 	}
 
@@ -163,12 +163,12 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void PutMove()
+	public void PutMove()
 	{
-		string[] names = {"Left", "Right", "Up"};
+		string[] names = {"Left", "Right", "Up", "A", "B"};
 		btn = button.GetComponent<ButtonMv> ();
 
-		for (int i = 0; i < 3; i++) 
+		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			btn.Image = "Arrows-" + names[i];
 			btn.Size = 0.2f;
@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour {
 	void PutPlayer()
 	{
 		ply = player.GetComponent<Player> ();
-		ply.Image = "PP 01 caminado0003";
+		ply.Image = "PrincipalMan";
 		ply.Size = 1f;
 		ply.PosX = -dr.PosX;
 		ply.PosY = fl.PosY + fl.Height / 2 + ply.ImageSize.y / 2f;
@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour {
 	{
 		string[] names = {"Girl", "Boy", "Camilo", "Nicky", "Nicky2", "Nicky3"};
 		string[] assets = {"chica-1", "chico-2", "chico-2", "bravucon-bully", "bravucon-1", "bravucon-2"};
-		float[] positions = {-6f, -4f, 7f, 10f, 12f, 14f};
+		float[] positions = {-32f, -30f, 7f, 10f, 12f, 14f};
 		other = otherCharac.GetComponent<OtherChar> ();
 
 		for (int i = 0, k = names.Length; i < k; i++) 
@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < 4; i++) 
 		{
 			bns.PosX = Random.Range (min, max);
-			bns.PosY = Random.Range (0f, Camera.main.ScreenToWorldPoint (new Vector3 (0f, Camera.main.pixelHeight, 0f)).y - bns.ImageSize.y / 2f);
+			bns.PosY = Random.Range (0f, Camera.main.ScreenToWorldPoint (new Vector3 (0f, Camera.main.pixelHeight, 0f)).y - bns.ImageSize.y / 2f - 1f);
 			bns.Put ();
 		}
 	}
@@ -263,15 +263,16 @@ public class GameManager : MonoBehaviour {
 		globoSound.clip = Resources.Load ("aparece_globo") as AudioClip;
 	}
 
-	void RemoveButtons()
+	public void RemoveButtons()
 	{
 		if (GameObject.FindWithTag ("Left") != null) 
 		{
-			UIErase(true);
+			//UIErase(true);
 			GameObject.FindGameObjectWithTag ("Left").gameObject.GetComponent<ButtonMv> ().Active (false);
 			GameObject.FindGameObjectWithTag ("Right").gameObject.GetComponent<ButtonMv> ().Active (false);
-			//if (GameObject.FindWithTag ("Up") != null) 
 			GameObject.FindGameObjectWithTag ("Up").gameObject.GetComponent<ButtonMv> ().Active (false);
+			GameObject.FindGameObjectWithTag("A").gameObject.GetComponent<ButtonMv> ().Active (false);
+			GameObject.FindGameObjectWithTag("B").gameObject.GetComponent<ButtonMv> ().Active (false);
 			//else
 				//GameObject.FindGameObjectWithTag ("Enter").gameObject.GetComponent<Button> ().Active (false);
 		}
@@ -360,7 +361,8 @@ public class GameManager : MonoBehaviour {
 				for (int i = 0, k = objects.Length; i <k; i++) 
 				{
 					if (objects [i].gameObject.GetComponent<OtherChar> ().ClickLimits (Input.mousePosition) && !GameObject.FindGameObjectWithTag("Left").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) &&
-					    !GameObject.FindGameObjectWithTag("Right").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("Up").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition))
+					    !GameObject.FindGameObjectWithTag("Right").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("Up").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && 
+					    !GameObject.FindGameObjectWithTag("A").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("B").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition))
 						ConversationSeq(i);
 				}
 			}

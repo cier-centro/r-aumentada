@@ -18,7 +18,7 @@ public class Player : Character {
 	{
 		base.Start ();
 		//doors = GameObject.FindGameObjectsWithTag ("Door");
-		coll.size = new Vector2(coll.size.x, 3.2f);
+		//coll.size = new Vector2(coll.size.x, 3.2f);
 	}
 	
 	public override void Put()
@@ -41,7 +41,7 @@ public class Player : Character {
 				    this.gameObject.transform.position.x <= doors[i].gameObject.transform.position.x + doors[i].gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2 &&
 				    GameObject.FindGameObjectWithTag ("Up").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition))
 				{
-					//ACA LA INSTRUCCION PARA CAMBIAR DE ESCENARIO
+					//TODO
 				}
 			}*/
 		}

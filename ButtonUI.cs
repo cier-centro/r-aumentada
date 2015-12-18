@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ButtonUI : MonoBehaviour {
 
-	private bool showUI;
+	public static bool showUI;
 	private RectTransform rectangle;
 
 	// Use this for initialization
@@ -16,14 +16,14 @@ public class ButtonUI : MonoBehaviour {
 
 	private IEnumerator ShowButton (bool show)
 	{
-		int sign;
-		float limit;
+		int sign = 0;
+		float limit = 0f;
 		if (show) 
 		{
 			sign = -1;
 			limit = 2.755f;
 		} 
-		else 
+		else if (!show && !showUI)
 		{
 			limit = 6.2f;
 			sign = 1;
@@ -36,10 +36,10 @@ public class ButtonUI : MonoBehaviour {
 		}
 	}
 
-	/*public void AnimButton()
+	public void FixedUI()
 	{
-		StartCoroutine (ShowButton (true));
-	}*/
+		showUI = true;
+	}
 
 	void LateUpdate()
 	{

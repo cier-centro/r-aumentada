@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-//public enum Dir_Arma { Derecha, Izquierda }
+using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class Character : Scenario {
-	
+
+	public bool run;
 	protected BoxCollider2D coll;
 	protected Rigidbody2D rigidPlayer;
 	protected Animator anim;
 	private AudioSource walkSound;
 	private AudioSource jumpSound;
+	private bool isBlinking;
 	
 	public virtual void Start()
 	{
@@ -21,6 +24,7 @@ public class Character : Scenario {
 		jumpSound.clip = Resources.Load ("salto") as AudioClip;
 		walkSound.loop = true;
 		jumpSound.loop = false;
+		run = false;
 	}
 	
 	public override void Put()
@@ -34,11 +38,21 @@ public class Character : Scenario {
 	
 	public void Move(string direction)
 	{
-		float speed = 150f;
+		float speed;
+		if (run) 
+		{
+			speed = 300f;
+			anim.SetFloat("Vel", 2f);
+		} 
+		else 
+		{
+			speed = 150f;
+			anim.SetFloat("Vel", 1f);
+		}
 		anim.SetTrigger ("BeginWalkMan");
 		if (!walkSound.isPlaying)
 			walkSound.Play ();
-		if (direction == "right")
+		if (direction == "Right")
 		{
 			gameObject.transform.localScale = new Vector3 (1, 1, 1);
 			speed = Mathf.Abs(speed);
@@ -50,6 +64,7 @@ public class Character : Scenario {
 		}
 		rigidPlayer.velocity = new Vector2 (speed * Time.deltaTime, rigidPlayer.velocity.y);
 		this.posX = transform.position.x;
+		run = false;
 	}
 	
 	public void StopWalk()
@@ -57,13 +72,22 @@ public class Character : Scenario {
 		rigidPlayer.velocity = new Vector2 (0f, rigidPlayer.velocity.y);
 		anim.SetTrigger ("StopWalkMan");
 		walkSound.Stop ();
+		if (!isBlinking)
+			StartCoroutine (Blink ());
 	}
 	
 	public void Jump()
 	{
+		float force;
+		if (run)
+			force = 1.4f;
+		else
+			force = 1.0f;
 		if (!jumpSound.isPlaying)
 			jumpSound.Play ();
-		rigidPlayer.AddRelativeForce (Vector3.up * 8f, ForceMode2D.Impulse);
+		anim.SetTrigger ("BeginJumpMan");
+		rigidPlayer.AddRelativeForce (Vector3.up * 2.2f * force, ForceMode2D.Impulse);
+		run = false;
 	}
 	
 	public bool isGround()
@@ -73,5 +97,20 @@ public class Character : Scenario {
 			return true;
 		else
 			return false;
+	}
+
+	public IEnumerator Blink()
+	{
+		isBlinking = true;
+		while (!Input.GetMouseButton(0)) 
+		{
+			float rnd = Random.Range (0f, 1f);
+			if (rnd >= 0.8)
+				anim.SetTrigger ("BeginBlinkMan");
+			else
+				anim.SetTrigger ("StopWalkMan");
+			yield return new WaitForSeconds (1);
+		}
+		isBlinking = false;
 	}
 }

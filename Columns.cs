@@ -28,7 +28,7 @@ public class Columns : Scenario {
 		base.Put ();
 		this.tag = "Untagged";
 		sc.sortingLayerName = "Game";
-		sc.sortingOrder = 31;
+		sc.sortingOrder = 29;
 		Instantiate (this, new Vector3 (this.posX, this.posY, 0f), Quaternion.identity);
 	}
 }

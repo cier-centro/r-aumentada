@@ -6,7 +6,7 @@ public class Ask : Scenario {
 
 	void Start()
 	{
-		this.gameObject.transform.localScale = new Vector3 (0.01f, 0.01f);
+		this.gameObject.transform.localScale = new Vector3 (0.1f, 0.01f);
 	}
 
 	public IEnumerator Anim(float finalSize, string text)
@@ -27,14 +27,14 @@ public class Ask : Scenario {
 	{
 		base.Put ();
 		sc.sortingLayerName = "Game";
-		sc.sortingOrder = 2;
+		sc.sortingOrder = 30;
 		this.tag = "Dog";
-		this.gameObject.transform.localScale = new Vector3 (1.5f, 1.5f);
+		this.gameObject.transform.localScale = new Vector3 (4f, 1.5f);
 		this.imageSize = sc.bounds.size;
 		GameObject dialog = GameObject.FindGameObjectWithTag ("Top");
-		dialog.gameObject.transform.localScale = new Vector3 (2.2f, 2.2f, 0f);
-		dialog.gameObject.GetComponent<Text> ().fontSize = 2;
-		dialog.gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + this.imageSize.x * 2f / 3f, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2);
-		Instantiate (this, new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + this.imageSize.x / 2, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2), Quaternion.identity);
+		dialog.gameObject.transform.localScale = new Vector3 (2f, 2f, 0f);
+		dialog.gameObject.GetComponent<Text> ().fontSize = 100;
+		dialog.gameObject.transform.position = new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2);
+		Instantiate (this, new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2), Quaternion.identity);
 	}
 }

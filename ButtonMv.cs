@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class ButtonMv : Scenario {
 
@@ -19,6 +20,7 @@ public class ButtonMv : Scenario {
 	{
 		time = 0f;
 		sc = gameObject.GetComponent<SpriteRenderer> ();
+		Input.multiTouchEnabled = true;
 	}
 
 	public override void Put()
@@ -32,35 +34,47 @@ public class ButtonMv : Scenario {
 
 	void FixedUpdate()
 	{
-		if (Input.GetMouseButton (0)) 
+		if (Input.touchCount > 0)
 		{
-			if (this.ClickLimits(Input.mousePosition))
+			Touch[] myTouches = Input.touches;
+			for (int i = 0, k = Input.touchCount; i < k; i++)
 			{
-				if (this.gameObject.tag == "Left")
-					GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().Move("left");
-				else if (this.gameObject.tag == "Right")
-					GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().Move("right");
-				else if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().isGround())
-				    GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().Jump();
+				if (this.ClickLimits(myTouches[i].position) && this.tag == "A")
+					GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().run = true;
 			}
-		}
-		else
-			GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>().StopWalk();
+			for (int i = 0, k = Input.touchCount; i < k; i++)
+			{
+				if (this.ClickLimits (myTouches[i].position))
+				{
+					if (this.gameObject.tag == "B" && GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().isGround ())
+						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Jump ();
+					if (this.gameObject.tag == "Left")
+						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Left");
+					if (this.gameObject.tag == "Right")
+						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
+				}
+			}
+		} 
+		else 
+			GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().StopWalk ();
 	}
 
 	void LateUpdate()
 	{
 		time += Time.deltaTime;
 		if (time < 2f) 
-			sc.color = new Color(0f, 0f, 0f, -0.45f * time + 1f);
+			sc.color = new Color(0f, 0f, 0f, -0.47f * time + 1f);
 
 		if (gameObject.tag == "Left")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.1f + gameObject.GetComponent<Renderer>().bounds.size.x / 2f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.1f + gameObject.GetComponent<Renderer> ().bounds.size.x / 2f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
 		else if (gameObject.tag == "Right")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.4f + gameObject.GetComponent<Renderer>().bounds.size.x * 1.5f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.6f + gameObject.GetComponent<Renderer> ().bounds.size.x * 1.5f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
 		else if (gameObject.tag == "Up")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.25f + gameObject.GetComponent<Renderer>().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 1.2f + gameObject.GetComponent<Renderer>().bounds.size.y);
-
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.35f + gameObject.GetComponent<Renderer> ().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 1.4f + gameObject.GetComponent<Renderer> ().bounds.size.y);
+		else if (gameObject.tag == "A")
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX - 0.1f - gameObject.GetComponent<Renderer> ().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 1f);
+		else if (gameObject.tag == "B")
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX - 0.1f - gameObject.GetComponent<Renderer> ().bounds.size.x * 2f, Camera.main.transform.position.y - Camara.delayCamY + 2f);
 
 		this.posX = gameObject.transform.position.x;
 		this.posY = gameObject.transform.position.y;
