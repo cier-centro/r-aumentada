@@ -42,8 +42,8 @@ public class Talk : Scenario {
 		this.tag = "Talk";
 		sc.sortingLayerName = "Game";
 		sc.sortingOrder = 30;
-		dialog.gameObject.transform.localScale = new Vector3 (2f, 2f, 2f);
-		dialog.gameObject.GetComponent<Text> ().fontSize = 120;
+		dialog.gameObject.transform.localScale = new Vector3 (10f, 10f, 10f);
+		dialog.gameObject.GetComponent<Text> ().fontSize = 2;
 		gameObject.transform.localScale = new Vector3 (0.01f, 0.01f, 0f);
 		if (this.dir) 
 			dialog.gameObject.transform.position = new Vector3(this.PosX - this.imageSize.x / 100f, this.posY + this.imageSize.y * 0.6f, 0f);

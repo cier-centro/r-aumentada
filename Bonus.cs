@@ -31,8 +31,8 @@ public class Bonus : Scenario {
 			bonusSound.Play();
 			finish = true;
 		}
-		GameManager.score++;
-		GameObject.FindGameObjectWithTag("Score").gameObject.GetComponent<Text>().text = GameManager.score.ToString();
+		GeneralGameManager.score++;
+		GameObject.FindGameObjectWithTag("Score").gameObject.GetComponent<Text>().text = GeneralGameManager.score.ToString();
 	}
 
 	void FixedUpdate()

@@ -49,6 +49,9 @@ public class Character : Scenario {
 			speed = 150f;
 			anim.SetFloat("Vel", 1f);
 		}
+#if UNITY_EDITOR
+		speed *= 5;
+#endif
 		anim.SetTrigger ("BeginWalkMan");
 		if (!walkSound.isPlaying)
 			walkSound.Play ();
@@ -80,7 +83,7 @@ public class Character : Scenario {
 	{
 		float force;
 		if (run)
-			force = 1.4f;
+			force = 1.55f;
 		else
 			force = 1.0f;
 		if (!jumpSound.isPlaying)

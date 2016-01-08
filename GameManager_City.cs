@@ -1,38 +1,36 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour {
+public class GameManager_City : MonoBehaviour {
 	
+	public static int score;
 	public string scenarioName;
 	public GameObject bonus;
 	public GameObject player;
-	public GameObject door;
 	public GameObject background;
 	public GameObject floor;
 	public GameObject button;
 	public GameObject balloon;
 	public GameObject otherCharac;
 	public GameObject askChar;
-
+	
 	public static float xMax;
 	public static float xMin;
-
+	
 	private Talk bln;
 	private Ask askAsker;
 	private Background bg;
-	private Columns clm;
 	private Floor fl;
 	private Floor bnd;
-	private Door dr;
 	private Bonus bns;
 	private Player ply;
 	private OtherChar other;
 	private ButtonMv btn;
 	private AudioSource backSound;
 	private AudioSource globoSound;
-
+	
 	private string[] history;
 	private bool put;
 	private int line;
@@ -41,28 +39,24 @@ public class GameManager : MonoBehaviour {
 	private GameObject[] objects;
 	private bool isTalking;
 	private bool dirTalk = true;
-
+	
+	public static bool paper;
+	public static bool hammer;
+	public static bool gun;
+	public static bool key;
+	public static int advance;
+	public static int preg;
+	
 	void PutBackground()
 	{
 		bg = background.GetComponent<Background> ();
-		bg.Image = "escenario_colegio";
+		bg.Image = "Ciudad";
 		bg.PosX = 0;
 		bg.PosY = 0;
 		bg.Size = 1f;
 		bg.Put ();
-		PutColumns ();
 	}
-
-	void PutColumns()
-	{
-		clm = background.GetComponent<Columns> ();
-		clm.Image = "escenario_colegio_columnas";
-		clm.PosX = 0;
-		clm.PosY = 0;
-		clm.Size = 1.40625f;
-		clm.Put ();
-	}
-
+	
 	void PutFloor()
 	{
 		fl = floor.GetComponent<Floor> ();
@@ -74,7 +68,7 @@ public class GameManager : MonoBehaviour {
 		fl.TagStr = "Floor";
 		fl.PutFloor ();
 	}
-
+	
 	void PutBounds()
 	{
 		bnd = floor.GetComponent<Floor> ();
@@ -86,41 +80,18 @@ public class GameManager : MonoBehaviour {
 			if (i == 0)
 				bnd.PosX = -bg.ImageSize.x * bg.Size / 2 - 0.25f;
 			else
-				bnd.PosX = 19f;
+				bnd.PosX = bg.ImageSize.x * bg.Size / 2 + 0.25f;;
 			bnd.PosY = 0f;
 			bnd.Rotation = 0f;
 			bnd.PutFloor();
 		}
 	}
-
-	void PutDoor()
-	{
-		dr = door.GetComponent<Door> ();
-		dr.Image = "door";
-		dr.Origin = scenarioName;
-		dr.Size = 1f;
-		dr.PosY = -2.955f;
-		for (int i = 0; i < 2; i++) 
-		{
-			if (i == 0)
-			{
-				dr.Destination = "Scene2";
-				dr.PosX = -bg.ImageSize.x / 2f + dr.ImageSize.x / 2f + 1f;
-			}
-			else
-			{
-				dr.Destination = "Scene3";
-				dr.PosX = bg.ImageSize.x / 2f - dr.ImageSize.x / 2f - 1f;
-			}
-			dr.Put ();
-		}
-	}
-
+	
 	public void PutMove()
 	{
 		string[] names = {"Left", "Right", "Up", "A", "B"};
 		btn = button.GetComponent<ButtonMv> ();
-
+		
 		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			btn.Image = "Arrows-" + names[i];
@@ -129,24 +100,24 @@ public class GameManager : MonoBehaviour {
 			btn.Put();
 		}
 	}
-
+	
 	void PutPlayer()
 	{
 		ply = player.GetComponent<Player> ();
 		ply.Image = "PrincipalMan";
 		ply.Size = 1f;
-		ply.PosX = -dr.PosX;
+		ply.PosX = -bg.ImageSize.x * bg.Size / 2 + 2f;
 		ply.PosY = fl.PosY + fl.Height / 2 + ply.ImageSize.y / 2f;
 		ply.Put ();
 	}
 	
 	void PutCharacters()
 	{
-		string[] names = {"Josefa", "Camilo", "Nicky", "Nicky2", "Nicky3", "Profesor", "Encapuchado"};
-		string[] assets = {"chica-1", "chico-2", "bravucon-bully-mosntruo", "bravucon-1-monstruo", "bravucon-2-mosntruo", "profesor2", "encapuchado_total"};
-		float[] positions = {-20f, -18f, -11f, -8f, -6f, 20f, 39.5f};
+		string[] names = {"Josefa", "Camilo", "Nicky", "Nicky2", "Nicky3", "Profesor"};
+		string[] assets = {"chica-1", "chico-2", "bravucon-bully-mosntruo", "bravucon-1-monstruo", "bravucon-2-mosntruo", "profesor2"};
+		float[] positions = {-20f, -18f, -11f, -8f, -6f, 20f};
 		other = otherCharac.GetComponent<OtherChar> ();
-
+		
 		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			other.name = names[i];
@@ -161,13 +132,13 @@ public class GameManager : MonoBehaviour {
 			other.Put();
 		}
 	}
-
+	
 	void PutBonus(float min, float max)
 	{
 		bns = bonus.GetComponent<Bonus> ();
 		bns.Image = "empanada";
 		bns.Size = 1f;
-
+		
 		for (int i = 0; i < 20; i++) 
 		{
 			bns.PosX = Random.Range (min, max);
@@ -175,7 +146,7 @@ public class GameManager : MonoBehaviour {
 			bns.Put ();
 		}
 	}
-
+	
 	void PutSound()
 	{
 		backSound = gameObject.AddComponent<AudioSource> ();
@@ -183,32 +154,39 @@ public class GameManager : MonoBehaviour {
 		backSound.loop = true;
 		backSound.Play ();
 	}
-
+	
 	void Load()
 	{
+		QuestionDisable ();
 		PutBackground ();
 		xMin = bg.PosX - bg.ImageSize.x / 2f;
 		xMax = bg.PosX + bg.ImageSize.x / 2f;
 		PutBounds ();
 		PutFloor ();
-		PutDoor ();
 		PutMove ();
 		PutPlayer ();
 		PutCharacters ();
 		PutBonus (xMin, xMax);
 		PutSound ();
 	}
-
+	
 	void Awake () 
 	{
+		paper = false;
+		hammer = false;
+		gun = false;
+		key = false;
+		preg = 1;
+		advance = 0;
+		score = 0;
 		line = 0;
 		Load ();
-		history = new string[]{"Josefa", "Camilo", "Profesor", "Encapuchado"};
+		history = new string[]{"Josefa", "Camilo", "Profesor"};
 		objects = GameObject.FindGameObjectsWithTag("Other");
 		globoSound = gameObject.AddComponent<AudioSource> ();
 		globoSound.clip = Resources.Load ("aparece_globo") as AudioClip;
 	}
-
+	
 	public void RemoveButtons()
 	{
 		if (GameObject.FindWithTag ("Left") != null) 
@@ -220,7 +198,73 @@ public class GameManager : MonoBehaviour {
 			GameObject.FindGameObjectWithTag("B").gameObject.GetComponent<ButtonMv> ().Active (false);
 		}
 	}
-
+	
+	void UIErase(bool erase)
+	{
+		if (erase) 
+		{
+			GameObject.Find ("ButtonBag").gameObject.GetComponent<Button> ().interactable = false;
+			GameObject.Find ("Food").gameObject.GetComponent<Image>().enabled = false;
+			GameObject.Find ("ButtonHome").gameObject.GetComponent<Button> ().interactable = false;
+			GameObject.FindGameObjectWithTag("Score").gameObject.GetComponent<Text>().text = "";
+		} 
+		else 
+		{
+			GameObject.Find ("ButtonBag").gameObject.GetComponent<Button> ().interactable = true;
+			GameObject.Find ("Food").gameObject.GetComponent<Image> ().enabled = true;
+			GameObject.Find ("ButtonHome").gameObject.GetComponent<Button> ().interactable = true;
+			GameObject.FindGameObjectWithTag("Score").gameObject.GetComponent<Text>().text = score.ToString();
+		}
+	}
+	
+	public void QuestionDisable()
+	{
+		string[] buttonsD = {"OpcA", "OpcB", "OpcC", "OpcD"};
+		GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (false);
+		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = "";
+		
+		for (int i = 0; i < 4; i++) 
+		{
+			GameObject.Find (buttonsD[i]).gameObject.GetComponent<Button> ().interactable = false;
+			GameObject.Find ("Text" + buttonsD[i]).gameObject.GetComponent<Text> ().text = "";
+		}
+	}
+	
+	public void PutQuestion()
+	{
+		string[] sentence = new string[]{"", "", "", ""};
+		switch (GeneralGameManager.preg) 
+		{
+		case 1:
+			sentence = new string[]{
+				"Coordinador monstruo: De acuerdo con las normas del gobierno escolar ¿es correcta la sanción que impongo al estudiante?",
+				"Sí, pues debo corregir los estudiantes más problemáticos.",
+				"No, pues debo procurar el bienestar de todos los estudiantes.",
+				"Sí, pues debo dar ejemplo a los demás estudiantes.",
+				"No, pues debo respetar los deseos de todos los estudiantes."
+			};
+			break;
+		default:
+			sentence = new string[]{
+				"Coooooooordinador monstruo: colar ¿es correcta la sanción que impongo al estudiante?",
+				"pues debo corregir los estudiantes más problemáticos.",
+				" debo procurar el bienestar de todos los estudiantes.",
+				"r ejemplo a los demás estudiantes.",
+				"No, pues debo respeos los estudiantes."
+			};
+			break;
+		}
+		string[] buttonsD = {"OpcA", "OpcB", "OpcC", "OpcD"};
+		GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (true);
+		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = sentence[0];
+		
+		for (int i = 1, k = sentence.Length ; i < k; i++) 
+		{
+			GameObject.Find (buttonsD[i-1]).gameObject.GetComponent<Button> ().interactable = true;
+			GameObject.Find ("Text" + buttonsD[i-1]).gameObject.GetComponent<Text> ().text = sentence[i];
+		}
+	}
+	
 	IEnumerator Conversation(string[] P, string [] text, bool direction, string top)
 	{
 		bln = balloon.GetComponent<Talk> ();
@@ -255,6 +299,7 @@ public class GameManager : MonoBehaviour {
 			TopBall (top);
 		}
 		PutMove();
+		UIErase (false);
 		isTalking = false;
 	}
 	
@@ -267,7 +312,7 @@ public class GameManager : MonoBehaviour {
 		globoSound.Play ();
 		StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (2f, textTop));
 	}
-
+	
 	void ConversationSeq (int i)
 	{
 		string top = "";
@@ -288,7 +333,6 @@ public class GameManager : MonoBehaviour {
 				};
 				boys = new string[]{"Josefa", "Camilo", "Camilo"};
 				top = "¡Se ha guardado el folder en tu maleta!";
-				GeneralGameManager.advance++;
 				break;
 				
 			case 1:
@@ -299,7 +343,7 @@ public class GameManager : MonoBehaviour {
 				};
 				boys = new string[]{"Camilo", "Camilo", "Nicky"};
 				break;
-
+				
 			case 2:
 				conv = new string[]{
 					"¿QUÉ SIGUEN HACIENDO AQUÍ NIÑOS?",
@@ -311,18 +355,7 @@ public class GameManager : MonoBehaviour {
 				};
 				boys = new string[]{"Profesor", "Profesor", "Camilo", "Camilo", "Camilo", "Camilo"};
 				top = "Oprime la flecha de arriba cuando estes frente al patio para ir a formar.";
-				GeneralGameManager.advance++;
-				break;
-
-			case 3:
-				conv = new string[]{
-					"Adentro no hay nada...",
-					"aún así...",
-					"espero que encuentres lo que buscas..."
-				};
-				boys = new string[]{"Encapuchado", "Encapuchado", "Encapuchado"};
-				top = "El Encapuchado te dio un MARTILLO y una LLAVE. Una vez desbloquees la puerta, oprime la flecha de arriba para entrar.";
-				GeneralGameManager.advance++;
+				advance++;
 				break;
 				
 			default:
@@ -343,7 +376,7 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine (Conversation (boys, conv, dirTalk, top));
 		}
 	}
-
+	
 	void FixedUpdate () 
 	{
 		if (Input.GetMouseButtonDown (0)) 
@@ -354,7 +387,7 @@ public class GameManager : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Talk").gameObject.GetComponent<Talk>().Active(false);
 				GameObject.FindGameObjectWithTag("Conversation").gameObject.GetComponent<Text>().text = "";
 			}
-
+			
 			else if (!isTalking)
 			{
 				for (int i = 0, k = objects.Length; i <k; i++) 
@@ -362,10 +395,14 @@ public class GameManager : MonoBehaviour {
 					if (objects [i].gameObject.GetComponent<OtherChar> ().ClickLimits (Input.mousePosition) && !GameObject.FindGameObjectWithTag("Left").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) &&
 					    !GameObject.FindGameObjectWithTag("Right").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("Up").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && 
 					    !GameObject.FindGameObjectWithTag("A").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("B").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition))
+					{
+						if (line == 2 && objects[i].name == "Profesor(Clone)")
+							StartCoroutine(GameObject.Find("Camilo(Clone)").gameObject.GetComponent<OtherChar>().Move(Camera.main.transform.position.x - 1.5f));
 						ConversationSeq(i);
+					}
 				}
 			}
-
+			
 			if (GameObject.FindWithTag("Dog") != null)
 			{
 				GameObject.FindGameObjectWithTag("Dog").gameObject.GetComponent<Ask>().Active(false);
@@ -374,42 +411,30 @@ public class GameManager : MonoBehaviour {
 				{
 					ButtonQuest.put = true;
 					PutMove();
+					UIErase(false);
 				}
 			}
 		}
-
-		if (Time.time > 1f && Time.time < 1f + Time.fixedDeltaTime)
-			TopBall ("!Bien, llegaste al colegio¡ Encuentra a Camilo antes de las clases");
-
-		if (GeneralGameManager.advance == 5)
-			GeneralGameManager.paper = true;
-
-		if (line == 2 && GeneralGameManager.advance == 5) 
+		
+		if (line == 1)
+			paper = true;
+		
+		if (advance == 2 && ButtonQuest.put) 
 		{
-			if (GameObject.Find ("Camilo(Clone)").gameObject.transform.position.x <= GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x - 2.5f)
-				StartCoroutine (GameObject.Find ("Camilo(Clone)").gameObject.GetComponent<OtherChar> ().Move (GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x - 2.5f));
-			else if (GameObject.Find ("Camilo(Clone)").gameObject.transform.position.x >= GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x + 2.5f)
-				StartCoroutine (GameObject.Find ("Camilo(Clone)").gameObject.GetComponent<OtherChar> ().Move (GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x + 2.5f));
-		}
-
-		if (GeneralGameManager.advance == 7 && ButtonQuest.put) 
-		{
-			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
+			PutQuestion();
 			GameObject[] finish = GameObject.FindGameObjectsWithTag("Finish");
 			for (int i = 0, k = finish.Length; i < k; i++)
 			{
 				if (finish[i].gameObject.transform.position.x >= 15f)
+				{
 					finish[i].gameObject.transform.position = new Vector3(xMax + 0.25f, finish[i].gameObject.transform.position.y);
+				}
 			}
-			StartCoroutine(GameObject.Find("Encapuchado(Clone)").gameObject.GetComponent<OtherChar>().Move(29f));
 		}
-
-		if (GeneralGameManager.advance == 9) //TODO Cambiar
-		{ 
-			GeneralGameManager.hammer = true;
-			GeneralGameManager.key = true;
-		}
-
+		
+		if (Time.time > 1f && Time.time < 1f + Time.fixedDeltaTime)
+			TopBall ("!Bien, llegaste al colegio¡ Encuentra a Camilo antes de las clases");
+		
 		if (Input.GetKey (KeyCode.Escape))
 			Application.Quit ();
 	}

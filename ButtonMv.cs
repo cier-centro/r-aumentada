@@ -33,6 +33,26 @@ public class ButtonMv : Scenario {
 
 	void FixedUpdate()
 	{
+#if UNITY_EDITOR
+		if (Input.GetMouseButton(0)) 
+		{
+			if (this.ClickLimits(Input.mousePosition))
+			{
+				if (this.gameObject.tag == "B" && GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().isGround ())
+					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Jump ();
+				if (this.gameObject.tag == "Left")
+					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Left");
+				if (this.gameObject.tag == "Right")
+					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
+				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
+				{
+					//TODO
+					GeneralGameManager.advance++;
+				}
+			}
+		}
+#else
 		if (Input.touchCount > 0)
 		{
 			Touch[] myTouches = Input.touches;
@@ -51,9 +71,16 @@ public class ButtonMv : Scenario {
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Left");
 					if (this.gameObject.tag == "Right")
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
+					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
+					{
+						//TODO
+						GeneralGameManager.advance++;
+					}
 				}
 			}
-		} 
+		}
+#endif
 		else 
 			GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().StopWalk ();
 	}
