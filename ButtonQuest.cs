@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ButtonQuest : MonoBehaviour {
 
-	public static bool put;
+	public Button btn;
+	public static bool put = false;
 
 	void Start ()
 	{
-		put = false;
+		btn = GetComponent<Button> ();
+		btn.interactable = false;
 	}
 
 	public void Eval()

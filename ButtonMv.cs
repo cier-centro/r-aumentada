@@ -5,6 +5,8 @@ public class ButtonMv : Scenario {
 
 	private string strName;
 	private float time;
+	private float time2;
+	private int togo = 0;
 
 	public string StrName {
 		get {
@@ -18,6 +20,7 @@ public class ButtonMv : Scenario {
 	void Start()
 	{
 		time = 0f;
+		time2 = -10f;
 		sc = gameObject.GetComponent<SpriteRenderer> ();
 		Input.multiTouchEnabled = true;
 	}
@@ -47,8 +50,16 @@ public class ButtonMv : Scenario {
 				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
 				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
 				{
-					//TODO
-					GeneralGameManager.advance++;
+					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+					time2 = Time.time;
+					togo = 1;
+				}
+				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.key)
+				{
+					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+					time2 = Time.time;
+					togo = 2;
 				}
 			}
 		}
@@ -74,8 +85,16 @@ public class ButtonMv : Scenario {
 					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
 					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
 					{
-						//TODO
-						GeneralGameManager.advance++;
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 1;
+					}
+					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.key)
+					{
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 2;
 					}
 				}
 			}
@@ -90,6 +109,8 @@ public class ButtonMv : Scenario {
 		time += Time.deltaTime;
 		if (time < 2f) 
 			sc.color = new Color(0f, 0f, 0f, -0.47f * time + 1f);
+		if (Time.time >= time2 + 1.5f && Time.time <= time2 + 2f)
+			Application.LoadLevel (togo);
 
 		if (gameObject.tag == "Left")
 			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.1f + gameObject.GetComponent<Renderer> ().bounds.size.x / 2f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);

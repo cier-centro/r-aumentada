@@ -4,24 +4,22 @@ using UnityEngine.UI;
 
 public class GeneralGameManager : MonoBehaviour {
 
-	public static int score;
-	public static bool paper;
-	public static bool hammer;
-	public static bool gun;
-	public static bool key;
-	public static int advance;
-	public static int preg;
+	public static GeneralGameManager instance = null;
+	public static int score = 0;
+	public static bool paper = false;
+	public static bool hammer = false;
+	public static bool gun = false;
+	public static bool key = false;
+	public static int advance = 4;
+	public static int preg = 3;
 
 	void Awake ()
 	{
-		score = 0;
-		paper = false;
-		hammer = false;
-		gun = false;
-		key = false;
-		advance = 4; //TODO OJO
-		preg = 3; //TODO OJO
-		QuestionDisable ();
+		if (instance == null)
+			instance = this;
+		else
+			Destroy (gameObject);
+		DontDestroyOnLoad (gameObject);
 	}
 
 	public void PutQuestion()

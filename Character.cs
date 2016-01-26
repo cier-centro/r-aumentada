@@ -21,7 +21,7 @@ public class Character : Scenario {
 		walkSound = gameObject.AddComponent<AudioSource> ();
 		jumpSound = gameObject.AddComponent<AudioSource> ();
 		walkSound.clip = Resources.Load ("walking_sound") as AudioClip;
-		jumpSound.clip = Resources.Load ("salto") as AudioClip;
+		jumpSound.clip = Resources.Load ("salto2") as AudioClip;
 		walkSound.loop = true;
 		jumpSound.loop = false;
 		run = false;
