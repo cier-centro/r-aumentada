@@ -28,8 +28,6 @@ public class Puntaje : MonoBehaviour {
         GUI.Label(new Rect(60, 130, 200, 20), TxtPantalla2, Estilo);
 
         if (scoreP>3 && scoreY==1) GUI.Label(new Rect(30, 230, 160, 15), "VE A LA PUERTA!!", Estilo);
-
-
     }    
       
 }

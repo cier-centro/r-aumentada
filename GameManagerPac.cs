@@ -57,6 +57,9 @@ public class GameManagerPac : MonoBehaviour {
 
 	void Start () 
 	{
+#if UNITY_EDITOR
+		Application.LoadLevel(4);
+#endif
 		gameState = GameState.Init;
         sonfon = gameObject.AddComponent<AudioSource>();
         sonfon.clip = Resources.Load("mjuego_pacman_01") as AudioClip;
@@ -94,7 +97,7 @@ public class GameManagerPac : MonoBehaviour {
         if (lives == 0)
         {
             sonfon.Stop();  
-            Application.LoadLevel(0);
+            Application.LoadLevel(3);
         }
 	}
 

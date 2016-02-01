@@ -3,6 +3,7 @@ using System.Collections;
 
 public class VideoGameManager : MonoBehaviour {
 
+	public int togo;
 	private float time;
 	// Update is called once per frame
 	void Start ()
@@ -17,7 +18,7 @@ public class VideoGameManager : MonoBehaviour {
 		if (time > 8f) 
 		{
 			GeneralGameManager.advance++;
-			Application.LoadLevel (0);
+			Application.LoadLevel (togo);
 		}
 	}
 }

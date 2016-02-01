@@ -18,7 +18,8 @@ public class OtherChar : Character {
 	{
 		base.Start ();
 		coll.isTrigger = rigidPlayer.isKinematic;
-		//rigidPlayer.isKinematic = true;
+		if (this.name == "Encapuchado(Clone)")
+			this.gameObject.transform.localScale = new Vector3 (0.01f, 0.01f);
 	}
 	
 	public override void Put()
@@ -65,7 +66,6 @@ public class OtherChar : Character {
 		}
 		coll.isTrigger = true;
 		rigidPlayer.isKinematic = true;
-		//animator.SetTrigger ("StopWalk");
 	}
 
 	void LateUpdate()

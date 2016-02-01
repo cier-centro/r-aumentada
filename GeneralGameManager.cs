@@ -10,8 +10,8 @@ public class GeneralGameManager : MonoBehaviour {
 	public static bool hammer = false;
 	public static bool gun = false;
 	public static bool key = false;
-	public static int advance = 4;
-	public static int preg = 3;
+	public static int advance = 20; //TODO
+	public static int preg = 9; //TODO
 
 	void Awake ()
 	{
@@ -47,25 +47,25 @@ public class GeneralGameManager : MonoBehaviour {
 			break;
 		case 3:
 			sentence = new string[]{
-				"Coordinador monstruo: De acuerdo con las normas del gobierno escolar ¿es correcta la sanción que impongo al estudiante?",
-				"Sí, pues debo corregir los estudiantes más problemáticos.",
-				"No, pues debo procurar el bienestar de todos los estudiantes.",
-				"Sí, pues debo dar ejemplo a los demás estudiantes.",
-				"No, pues debo respetar los deseos de todos los estudiantes."
+				"De acuerdo con las normas del gobierno escolar ¿es correcta la sanción que el coordinador impone al estudiante?",
+				"Sí, pues debe corregir los estudiantes más problemáticos.",
+				"No, pues debe procurar el bienestar de todos los estudiantes.",
+				"Sí, pues debe dar ejemplo a los demás estudiantes.",
+				"No, pues debe respetar los deseos de todos los estudiantes."
 			};
 			break;
 		case 4:
 			sentence = new string[]{
-				"¿Cuáles de los fragmentos de los niños se contradicen?",
-				"El de Niño nuevo y el de Camilo.",
-				"El de Camilo y el de la niña.",
-				"El de Niña Colitas y el de la niña.",
-				"El del niño nuevo y el de Niña Colitas."
+				"Dos de las frases no suenen bien ¿Cuáles de éstas se contradicen?",
+				"La de Chepe y la de Camilo.",
+				"La de Camilo y la de María.",
+				"La de Laura y la de María.",
+				"La de Chepe y la de Laura."
 			};
 			break;
 		case 5:
 			sentence = new string[]{
-				" De acuerdo con las normas del Gobierno estudiantil contarle la situación al personero ¿valdría la pena?",
+				"De acuerdo con las normas del Gobierno estudiantil...¿Debería contarle la situación al personero? ¿Valdría la pena?",
 				"Sí, porque entre sus funciones se encuentra llamar la atención a los profesores que se propasen.",
 				"No, porque entre sus funciones solo se encuentra organizar jornadas de convivencia y recreación.",
 				"Sí, porque entre de sus funciones se encuentra atender las peticiones de  los estudiantes.",
@@ -183,6 +183,7 @@ public class GeneralGameManager : MonoBehaviour {
 
 	public void QuestionDisable()
 	{
+		Debug.Log ("ENTER");
 		string[] buttonsD = {"OpcA", "OpcB", "OpcC", "OpcD"};
 		GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (false);
 		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = "";

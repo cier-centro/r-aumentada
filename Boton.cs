@@ -41,25 +41,21 @@ public class Boton : MonoBehaviour
         {
             if (HizoClick(mouse) && this.name == "Bot_Down")
             {
-                Debug.Log("Hizo Click Abajo");
                 down = true;
                 right = up = left = false;
             }
             else if (HizoClick(mouse) && this.name == "Bot_Up")
             {
-                Debug.Log("Hizo Click Arriba");
                 up = true;
                 right = left = down = false;
             }
             else if (HizoClick(mouse) && this.name == "Bot_Left")
             {
-                Debug.Log("Hizo Click Izquierda");
                 left = true;
                 right = up = down = false;
             }
             else if (HizoClick(mouse) && this.name == "Bot_Right")
             {
-                Debug.Log("Hizo Click Derecha");
                 right = true;
                 left = up = down = false;
             }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 	public string scenarioName;
 	public GameObject bonus;
 	public GameObject player;
-	public GameObject door;
+	public GameObject item;
 	public GameObject background;
 	public GameObject floor;
 	public GameObject button;
@@ -25,11 +25,12 @@ public class GameManager : MonoBehaviour {
 	private Columns clm;
 	private Floor fl;
 	private Floor bnd;
-	private Door dr;
 	private Bonus bns;
 	private Player ply;
 	private OtherChar other;
 	private ButtonMv btn;
+	private Items itm;
+
 	private AudioSource backSound;
 	private AudioSource globoSound;
 
@@ -86,33 +87,10 @@ public class GameManager : MonoBehaviour {
 			if (i == 0)
 				bnd.PosX = -bg.ImageSize.x * bg.Size / 2 - 0.25f;
 			else
-				bnd.PosX = 7f;
+				bnd.PosX = 4.5f;
 			bnd.PosY = 0f;
 			bnd.Rotation = 0f;
 			bnd.PutFloor();
-		}
-	}
-
-	void PutDoor()
-	{
-		dr = door.GetComponent<Door> ();
-		dr.Image = "door";
-		dr.Origin = scenarioName;
-		dr.Size = 1f;
-		dr.PosY = -2.955f;
-		for (int i = 0; i < 2; i++) 
-		{
-			if (i == 0)
-			{
-				dr.Destination = "Scene2";
-				dr.PosX = -bg.ImageSize.x / 2f + dr.ImageSize.x / 2f + 1f;
-			}
-			else
-			{
-				dr.Destination = "Scene3";
-				dr.PosX = bg.ImageSize.x / 2f - dr.ImageSize.x / 2f - 1f;
-			}
-			dr.Put ();
 		}
 	}
 
@@ -135,30 +113,32 @@ public class GameManager : MonoBehaviour {
 		ply = player.GetComponent<Player> ();
 		ply.Image = "PrincipalMan";
 		ply.Size = 1f;
-		ply.PosX = -dr.PosX;
+		ply.PosX = -xMax + 2f;
 		ply.PosY = fl.PosY + fl.Height / 2 + ply.ImageSize.y / 2f;
 		ply.Put ();
 	}
 	
 	void PutCharacters()
 	{
-		string[] names = {"Josefa", "Camilo", "Nicky", "Nicky2", "Nicky3", "Profesor", "Encapuchado"};//, "Antonio", "Andrea"};
+		string[] names = {"Maria", "Camilo", "Nicky", "Ronaldo", "Felipe", "Profesor", "Chepe", "Encapuchado", "Laura"};
 		string[] assets = {
-			"chica-1",
-			"chico-2",
-			"bravucon-bully-mosntruo",
-			"bravucon-1-monstruo",
-			"bravucon-2-mosntruo",
-			"profesor2",
-			"encapuchado_total"
-		};//, "chico-3", "chica-2"};
-		float[] positions = {-50f, -52f, -38f, -36f, -34f, 7f, 45f};//, 44f, 46f};
+			"chica-2", //0
+			"chico-3", //1
+			"bravucon-bully-mosntruo", //2
+			"bravucon-1-monstruo", //3
+			"bravucon-2-mosntruo", //4
+			"profesor2", //5
+			"chico-2", //6
+			"encapuchado_total", //7
+			"chica-1" //8
+		};
+		float[] positions = {-50f, -52f, -33f, -30.5f, -29f, 4.5f, 19.3f, 48.1f, 34.2f};
 		other = otherCharac.GetComponent<OtherChar> ();
 
 		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			other.name = names[i];
-			if (i <= 1 || i == 5)
+			if (i == 5 || i == 6 || i == 8)
 				other.Size = 0.8f;
 			else
 				other.Size = 0.5f;
@@ -170,13 +150,34 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	void PutItems()
+	{
+		string[] images = {"encapuchado_total", "encapuchado_total", "encapuchado_total", "candado"};
+		string[] names = {"Organic", "Paper", "Super", "Padlock"};
+		float[] position = {42.18f, 43.64f, 45.08f, 35.35f};
+		float[] sizes = {0.35f, 0.35f, 0.35f, 1f};
+		itm = item.GetComponent<Items> ();
+
+		for (int i = 0, k = names.Length; i < k; i++) 
+		{
+			itm.name = names[i];
+			itm.Image = images[i];
+			itm.Size = sizes[i];
+			itm.PosX = position[i];
+			itm.PosY = -1.75f;
+			itm.Put();
+			if (i < 3)
+				GameObject.Find(names[i] + "(Clone)").GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 0f);
+		}
+	}
+
 	void PutBonus(float min, float max)
 	{
 		bns = bonus.GetComponent<Bonus> ();
 		bns.Image = "empanada";
 		bns.Size = 1f;
 
-		for (int i = 0; i < 20; i++) 
+		for (int i = 0; i < 10; i++) 
 		{
 			bns.PosX = Random.Range (min, max);
 			bns.PosY = Random.Range (0f, 2.6f);
@@ -192,17 +193,64 @@ public class GameManager : MonoBehaviour {
 		backSound.Play ();
 	}
 
+	public void PutNew(string name1, string asset, bool talk, float posx, float posy, float size = 1f)
+	{
+		if (talk) 
+		{
+			other = otherCharac.GetComponent<OtherChar> ();
+			other.name = name1;
+			other.Size = size;
+			other.Image = asset;
+			other.PosX = posx;
+			other.PosY = posy;
+			other.Solid = false;
+			other.Put ();
+			objects = GameObject.FindGameObjectsWithTag("Other");
+		} 
+		else 
+		{
+			itm = item.GetComponent<Items> ();
+			itm.name = name1;
+			itm.Image = asset;
+			itm.Size = size;
+			itm.PosX = posx;
+			itm.PosY = posy;
+			itm.Put();
+		}
+	}
+
 	void LoadSavedGame()
 	{
-		if (GeneralGameManager.advance >= 5) 
+		if (GeneralGameManager.advance >= 4) 
 		{
-			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (0f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
-			GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position = new Vector3 (-40f, GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y);
+			if (line >= 2)
+				GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (-1f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
 		}
-		if (GeneralGameManager.advance >= 6 && GeneralGameManager.advance < 8)
-			GameObject.FindGameObjectWithTag("Player").gameObject.transform.position = new Vector3(2f, GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.y);
-		else if (GeneralGameManager.advance >=8)
-			GameObject.FindGameObjectWithTag("Player").gameObject.transform.position = new Vector3(43f, GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.y);
+		if (GeneralGameManager.advance >= 6) 
+		{
+			GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position = new Vector3 (2f, GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y);
+			GameObject[] finish = GameObject.FindGameObjectsWithTag("Finish");
+			for (int i = 0, k = finish.Length; i < k; i++)
+			{
+				if (finish[i].gameObject.transform.position.x >= 0f)
+					finish[i].gameObject.transform.position = new Vector3(xMax + 0.25f, 0f);
+			}
+		}
+		if (GeneralGameManager.advance >= 10) 
+		{
+			GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position = new Vector3 (25f, GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y);
+			GameObject.Find ("Maria(Clone)").gameObject.transform.position = new Vector3 (42f, GameObject.Find ("Maria(Clone)").gameObject.transform.position.y);
+			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (44f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
+			GameObject.Find ("Chepe(Clone)").gameObject.transform.position = new Vector3 (46f, GameObject.Find ("Chepe(Clone)").gameObject.transform.position.y);
+			GameObject.Find ("Laura(Clone)").gameObject.transform.position = new Vector3 (48f, GameObject.Find ("Laura(Clone)").gameObject.transform.position.y);
+		}
+
+		if (GeneralGameManager.advance >= 17) 
+		{
+			GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position = new Vector3 (35f, GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y);
+			PutNew("Personero", "office", true, 34.9f, 0f, 2f);
+			GameObject.Find("Padlock(Clone)").gameObject.GetComponent<Items>().Active(false);
+		}
 	}
 
 	void Load()
@@ -212,10 +260,10 @@ public class GameManager : MonoBehaviour {
 		xMax = bg.PosX + bg.ImageSize.x / 2f;
 		PutBounds ();
 		PutFloor ();
-		PutDoor ();
 		PutMove ();
 		PutPlayer ();
 		PutCharacters ();
+		PutItems ();
 		PutBonus (xMin, xMax);
 		PutSound ();
 	}
@@ -224,7 +272,7 @@ public class GameManager : MonoBehaviour {
 	{
 		Load ();
 		LoadSavedGame ();
-		history = new string[]{"Josefa", "Nicky", "Profesor", "Camilo", "Camilo", "Encapuchado", "Antonio"};
+		history = new string[]{"Maria", "Nicky", "Profesor", "Chepe", "Encapuchado", "Encapuchado", "Camilo", "Camilo", "Personero", "Laura", "Personero"};
 		objects = GameObject.FindGameObjectsWithTag("Other");
 		globoSound = gameObject.AddComponent<AudioSource> ();
 		globoSound.clip = Resources.Load ("aparece_globo") as AudioClip;
@@ -311,9 +359,7 @@ public class GameManager : MonoBehaviour {
 					"El personero debería hacer algo ante esta situación, pero no hace nada. ",
 					"No digas nada pero me dijeron que hay un lugar custodiado y escondido en el colegio, repleto de libros.", 
 				};
-				boys = new string[]{"Josefa", "Josefa", "Camilo", "Josefa"};
-				top = "¡Se ha guardado en tu maleta!";
-				plus = true;
+				boys = new string[]{"Maria", "Maria", "Camilo", "Maria"};
 				break;
 				
 			case 1:
@@ -327,65 +373,126 @@ public class GameManager : MonoBehaviour {
 				conv = new string[]{
 					"¿QUÉ SIGUEN HACIENDO AQUÍ NIÑOS?",
 					"¡VAYAN A HACER LA FORMACIÓN YA!",
-					"El profesor ¿no? Cada vez se pasan más tratándonos mal.",
+					"Cada día que pasa los profesores nos tratan peor.",
 					"No hay nada que diga que lo que hace es incorrecto.",
 					"Ojalá el Encapuchado haga algo. Mejor vamos a formar."
 				};
-				boys = new string[]{"Profesor", "Profesor", "Camilo", "Camilo", "Camilo", "Camilo"};
+				boys = new string[]{"Profesor", "Profesor", "Camilo", "Camilo", "Camilo"};
 				top = "Oprime la flecha de arriba cuando estes frente al patio para ir a formar.";
 				plus = true;
 				break;
 
 			case 3:
 				conv = new string[]{
-					"No puedo creer que acá nos traten así..."
+					"Ey mi vale, no te creo que acá nos traten así..."
 				};
-				boys = new string[]{"Camilo"};
+				boys = new string[]{"Chepe"};
 				break;
 
 			case 4:
 				conv = new string[]{
-					"Ya decía yo......¿Alguna vez te has dado cuenta que los bravucones nunca están en las formaciones?"
+					"Quién eres tu?",
+					"Hola. No importa quién soy. Lo importante ahora es detener lo que está pasando.",
+					"Me gusta tu disfraz",
+					"¡No es un disfraz! Es mi traje de superhéroe vigilante con un pasado oscuro que lucha por la-verdad y la justicia.",
+					"Y ¿contra quién luchas?",
+					"Contra mi peor enemigo.",
+					"...",
+					"Okey, no sé quién es pero quiero descubrirlo.",
+					"¿No ves como se comporta la gente? ¿y esas sustancias verdes que parecen mocos?",
+					"Algo muy raro pasa.",
+					"Eres chistoso, te ayudaré. ¿Tienes alguna pista?",
+					"No, o sí. No lo sé, no puedo pensar con el estómago vacío."
 				};
-				boys = new string[]{"Camilo"};
+				boys = new string[]{"Player", "Encapuchado", "Player", "Encapuchado", "Player", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Encapuchado", "Player", "Encapuchado"};
+				plus = true;//TODO OJO
 				break;
 
 			case 5:
-				conv = new string[]{
-					"Quién eres tu?",
-					"Hola. No importa quién soy. Lo importante ahora es detener lo que está pasando.",
-					"¿Y qué esta pasando?",
-					"¿No ves como se comporta la gente? ¿y esas sustancias verdes que parecen mocos?",
-					"Algo muy raro pasa y quiero descubrirlo!",
-					"La gente se está comportando de forma extraña. Mucha mala vibra, no?",
-					"Si, todos se ha convertido en personas egoístas, solitarias y nada amigables.",
-					"¡Y también tienen un terrible caso de acné verde!",
-					"Creo que seguiré investigando. Espero que no desaparezcas...",
-					"Desaparecer es mi súper-poder. ¡Suerte, parcero!",
-				};
-				boys = new string[]{"Player", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Player", "Encapuchado"};
-				top = "¡El encapuchado te ha dado un martillo!";
-				plus = true;
+				if (GeneralGameManager.advance == 8)
+				{
+					conv = new string[]{
+						"No tires porquerías a mi guarida… Momento… ¡Es una manzana!",
+						"Encontré este martillo al fondo de la caneca, quizá pueda servirte."
+					};
+					boys = new string[]{"Encapuchado", "Encapuchado"};
+					top = "Martillo agregado a tu inventario";
+				}
+				else
+				{
+					conv = new string[]{
+						"Tengo mucha hambre para hablar"
+					};
+					boys = new string[]{"Encapuchado"};
+					line--;
+				}
 				break;
 
 			case 6:
-				conv = new string[]{
-					"JUGADOR, hablamos con el Niño Nuevo y pensamos que las sanciones públicas no deberían ser permitidas",
-					"Sí, como le pasó a Pablo hace unas horas en el patio.",
-					"Sí, pero ¿cómo confirmarlo?"
-				};
-				boys = new string[]{"Camilo", "Josefa", "Antonio"};
-				top = "Mira los papeles qué recogiste, allí puedes encontrar algo...";
+				if (GeneralGameManager.advance == 10)
+				{
+					conv = new string[]{
+						"JUGADOR, Hablamos con Chepe y pensamos que las sanciones públicas no deberían ser permitidas",
+						"Sí, como le pasó a Pablo hace unas horas en el patio.",
+						"Pero ¿cómo confirmarlo? Si sólo tuviéramos algún manual o reglamento.",
+						"Encontré estos papeles regados por la biblioteca. Nicky y su parche estaban escondiéndolos. ¡Leámoslos!",
+						"\"Los estudiantes serán sancionados sin atentar contra su dignidad\".",
+						"\"Los estudiantes serán sancionados en público si la falta atentó contra los valores de la institución\".",
+						"\"Los estudiantes serán sancionados sin atentar contra sus derechos\".",
+						"\"Los estudiantes serán sancionados frente a otros si la falta atentó contra el director\"."
+					};
+					boys = new string[]{"Camilo", "Laura", "Chepe", "Player", "Chepe", "Maria", "Camilo", "Laura"};
+					plus = true;
+				}
+				else
+				{
+					conv = new string[]{"No quiero hablar!"};
+					boys = new string[]{"Camilo"};
+					line--;
+				}
 				break;
 
 			case 7:
 				conv = new string[]{
-					"\"Los estudiantes serán sancionados sin atentar contra su dignidad\".",
-					"\"los estudiantes serán sancionados en público si la falta atentó contra los valores de la institución\".",
-					"\"Los estudiantes serán sancionados sin atentar contra sus derechos\".",
-					"\"Los estudiantes serán sancionados frente a otros si la falta atentó contra el director\"."
+					"Deberíamos decirle la queja a alguien.",
+					"En mi colegio había un personero ¿aquí no, qué?",
+					"Sí, pero nadie lo ha visto en mucho tiempo.",
+					"¿Y qué hace un personero?",
+					"Ey mi vale, ya que encontraste la biblioteca deberías hacer algo con el Personero?"
 				};
-				boys = new string[]{"Antonio", "Josefa", "Camilo", "Andrea"};
+				boys = new string[]{"Camilo", "Chepe", "Maria", "Laura", "Chepe"};
+				break;
+
+			case 8:
+				conv = new string[]{
+					"Soy Pedro, el personero del colegio.",
+					"O sea ¿No crees que soy genial por ser el Personero? Tengo mi oficina y todo.",
+					"¿Qué necesitas? O sea ¿Quieres que te enseñe a ser genial verdad?",
+					"No no, los profesores andan raros. Nos castigan de una forma poco \"elegante\", me parece.",
+					"¿No deberías hacer algo?",
+					"No sabría qué hacer, nunca me han dicho mis funciones.",
+					"O sea pregunté a todos pero nunca me dijeron. ¿Necesitas algo más?"
+				};
+				boys = new string[]{"Personero", "Personero", "Personero", "Player", "Player", "Personero", "Personero"};
+				plus = true;
+				break;
+
+			case 9:
+				conv = new string[]{
+					"¡Vaya, lo encontraste!",
+					"O sea, hablaré con mi amiga la Rectora ¿okey?",
+					"No, tienes que pasar una queja formal.",
+					"Pero… ¿a dónde?"
+				};
+				boys = new string[]{"Laura", "Personero", "Laura", "Personero"};
+				plus = true;
+				break;
+
+			case 10:
+				conv = new string[]{
+					"Tendremos que ir al Consejo Directivo, conozco una ruta fácil. ¡Vamos!"
+				};
+				boys = new string[]{"Personero"};
 				break;
 
 			default:
@@ -409,7 +516,8 @@ public class GameManager : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		Debug.Log (GeneralGameManager.advance);
+		Debug.Log ("Advance: " + GeneralGameManager.advance);
+		Debug.Log ("Line: " + line);
 		if (Input.GetMouseButtonDown (0)) 
 		{
 			if (!put && GameObject.FindWithTag("Talk") != null)
@@ -445,39 +553,41 @@ public class GameManager : MonoBehaviour {
 		if (Time.time > 1f && Time.time < 1f + Time.fixedDeltaTime)
 			TopBall ("Mh.. el colegio también está extraño.. ¿que será esa cosa verde?");
 
-		if (GeneralGameManager.advance == 5)
-			GeneralGameManager.paper = true;
+		if (line == 2 && GeneralGameManager.advance == 4) 
+			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (-1f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
 
-		if (line == 2 && GeneralGameManager.advance == 5) 
-			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (0f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
-
-		if (GeneralGameManager.advance == 7 && ButtonQuest.put) 
+		if (GeneralGameManager.advance == 6) 
 		{
-			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 			GameObject[] finish = GameObject.FindGameObjectsWithTag("Finish");
 			for (int i = 0, k = finish.Length; i < k; i++)
 			{
 				if (finish[i].gameObject.transform.position.x >= 6.5f)
 					finish[i].gameObject.transform.position = new Vector3(xMax + 0.25f, finish[i].gameObject.transform.position.y);
 			}
+			if (line == 4 && ButtonQuest.put)
+				GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 		}
 
-		if (GeneralGameManager.advance == 9)
-		{ 
+		if (GeneralGameManager.advance == 8 && line == 6)
 			GeneralGameManager.hammer = true;
+
+		if (GeneralGameManager.advance == 10) 
+		{
+			GeneralGameManager.paper = true;
 			GeneralGameManager.key = true;
 		}
 
-		/*if (GeneralGameManager.advance == 10) 
-		{
-			GameObject.Find("Camilo(Clone)").gameObject.transform.position = new Vector2(48f, GameObject.Find("Camilo(Clone)").gameObject.transform.position.y);
-			GameObject.Find("Josefa(Clone)").gameObject.transform.position = new Vector2(50f, GameObject.Find("Josefa(Clone)").gameObject.transform.position.y);
-		}
-
-		if (!isTalking && line == 6 && ButtonQuest.put) 
-		{
+		if (GeneralGameManager.advance == 11 && ButtonQuest.put)
 			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
-		}*/
+
+		if (GeneralGameManager.advance == 14 && ButtonQuest.put)
+			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
+
+		if (GeneralGameManager.advance == 15)
+			StartCoroutine(GameObject.Find ("Laura(Clone)").gameObject.GetComponent<OtherChar> ().Move (34f));
+
+		if (GeneralGameManager.advance == 16 && ButtonQuest.put)
+			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 
 		if (Input.GetKey (KeyCode.Escape))
 			Application.Quit ();

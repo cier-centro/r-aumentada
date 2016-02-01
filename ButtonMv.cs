@@ -48,18 +48,38 @@ public class ButtonMv : Scenario {
 				if (this.gameObject.tag == "Right")
 					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
 				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 5)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 					time2 = Time.time;
 					togo = 1;
 				}
 				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.key)
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.advance == 8)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 					time2 = Time.time;
 					togo = 2;
+				}
+				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 37.7f &&
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 32.7f && GeneralGameManager.advance == 16)
+				{
+					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+					time2 = Time.time;
+					togo = 5;
+				}
+				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 52.6f &&
+				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 48.2f && GeneralGameManager.advance == 17)
+				{
+					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+					time2 = Time.time;
+					togo = 7;
+				}
+				if (this.gameObject.tag == "Up" && GeneralGameManager.advance == 28)
+				{
+					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+					time2 = Time.time;
+					togo = 9;
 				}
 			}
 		}
@@ -83,18 +103,38 @@ public class ButtonMv : Scenario {
 					if (this.gameObject.tag == "Right")
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
 					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 6)
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 5)
 					{
 						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 						time2 = Time.time;
 						togo = 1;
 					}
 					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.key)
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.advance == 8)
 					{
 						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 						time2 = Time.time;
 						togo = 2;
+					}
+					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 37.7f &&
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 32.7f && GeneralGameManager.advance == 16)
+					{
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 5;
+					}
+					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 52.6f &&
+					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 48.2f && GeneralGameManager.advance == 17)
+					{
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 7;
+					}
+					if (this.gameObject.tag == "Up" && GeneralGameManager.advance == 28)
+					{
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 9;
 					}
 				}
 			}
