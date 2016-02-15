@@ -23,6 +23,7 @@ public class ButtonMv : Scenario {
 		time2 = -10f;
 		sc = gameObject.GetComponent<SpriteRenderer> ();
 		Input.multiTouchEnabled = true;
+		sc.color = new Color (255f, 255f, 255f, 0f);
 	}
 
 	public override void Put()
@@ -30,7 +31,7 @@ public class ButtonMv : Scenario {
 		base.Put ();
 		this.tag = this.strName;
 		sc.sortingLayerName = "Game";
-		sc.sortingOrder = 1;
+		sc.sortingOrder = 6;
 		Instantiate (this, new Vector3 (this.posX, this.posY, 0f), Quaternion.identity);
 	}
 
@@ -47,34 +48,7 @@ public class ButtonMv : Scenario {
 					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Left");
 				if (this.gameObject.tag == "Right")
 					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
-				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 5)
-				{
-					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-					time2 = Time.time;
-					togo = 1;
-				}
-				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.advance == 8)
-				{
-					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-					time2 = Time.time;
-					togo = 2;
-				}
-				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 37.7f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 32.7f && GeneralGameManager.advance == 16)
-				{
-					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-					time2 = Time.time;
-					togo = 5;
-				}
-				if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 52.6f &&
-				    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 48.2f && GeneralGameManager.advance == 17)
-				{
-					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-					time2 = Time.time;
-					togo = 7;
-				}
+			
 				if (this.gameObject.tag == "Up" && GeneralGameManager.advance == 28)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
@@ -102,34 +76,7 @@ public class ButtonMv : Scenario {
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Left");
 					if (this.gameObject.tag == "Right")
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Move ("Right");
-					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 19f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 0.4f && GeneralGameManager.advance == 5)
-					{
-						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-						time2 = Time.time;
-						togo = 1;
-					}
-					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 26.1f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 23.1f && GeneralGameManager.hammer && GeneralGameManager.advance == 8)
-					{
-						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-						time2 = Time.time;
-						togo = 2;
-					}
-					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 37.7f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 32.7f && GeneralGameManager.advance == 16)
-					{
-						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-						time2 = Time.time;
-						togo = 5;
-					}
-					if (this.gameObject.tag == "Up" && GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x <= 52.6f &&
-					    GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x >= 48.2f && GeneralGameManager.advance == 17)
-					{
-						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-						time2 = Time.time;
-						togo = 7;
-					}
+
 					if (this.gameObject.tag == "Up" && GeneralGameManager.advance == 28)
 					{
 						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
@@ -146,22 +93,14 @@ public class ButtonMv : Scenario {
 
 	void LateUpdate()
 	{
-		time += Time.deltaTime;
-		if (time < 2f) 
-			sc.color = new Color(0f, 0f, 0f, -0.47f * time + 1f);
-		if (Time.time >= time2 + 1.5f && Time.time <= time2 + 2f)
-			Application.LoadLevel (togo);
-
 		if (gameObject.tag == "Left")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.1f + gameObject.GetComponent<Renderer> ().bounds.size.x / 2f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.4f + gameObject.GetComponent<Renderer> ().bounds.size.x / 2f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
 		else if (gameObject.tag == "Right")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.6f + gameObject.GetComponent<Renderer> ().bounds.size.x * 1.5f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
-		else if (gameObject.tag == "Up")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 0.35f + gameObject.GetComponent<Renderer> ().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 1.4f + gameObject.GetComponent<Renderer> ().bounds.size.y);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x - Camara.delayCamX + 1.2f + gameObject.GetComponent<Renderer> ().bounds.size.x * 1.5f, Camera.main.transform.position.y - Camara.delayCamY + 1.4f);
 		else if (gameObject.tag == "A")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX - 0.1f - gameObject.GetComponent<Renderer> ().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 1f);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX - 1.4f - gameObject.GetComponent<Renderer> ().bounds.size.x, Camera.main.transform.position.y - Camara.delayCamY + 0.93f);
 		else if (gameObject.tag == "B")
-			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX - 0.1f - gameObject.GetComponent<Renderer> ().bounds.size.x * 2f, Camera.main.transform.position.y - Camara.delayCamY + 2f);
+			gameObject.transform.position = new Vector3 (Camera.main.transform.position.x + Camara.delayCamX + 0.7f - gameObject.GetComponent<Renderer> ().bounds.size.x * 2f, Camera.main.transform.position.y - Camara.delayCamY + 2.2f);
 
 		this.posX = gameObject.transform.position.x;
 		this.posY = gameObject.transform.position.y;

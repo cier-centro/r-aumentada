@@ -7,27 +7,12 @@ public class Inventory : MonoBehaviour {
 	private Button btn;
 	private ColorBlock btnCol;
 	private float time;
-	// Use this for initialization
-	void Awake ()
-	{
-		if (this.name == "Out") 
-		{
-			btn = GetComponent<Button> ();
-			btnCol = btn.colors;
-			btnCol.normalColor = new Color(0f, 0f, 0f, 1f);
-			btnCol.highlightedColor = new Color(0f, 0f, 0f, 1f);
-			btnCol.pressedColor = new Color(0f, 0f, 0f, 1f);
-			btn.colors = btnCol;
-			btn.interactable = true;
-		}
-	}
 
 	void Start () 
 	{
 		time = 0f;
 		btn = GetComponent<Button> ();
-		if (this.name != "Out")
-			btn.interactable = false;
+		btn.interactable = false;
 	}
 
 	public void InventoryOn()
@@ -45,29 +30,6 @@ public class Inventory : MonoBehaviour {
 		btn.interactable = false;
 		if (GameObject.FindWithTag ("Left") == null)
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ().PutMove ();
-	}
-
-	public void Appear(bool wantAppear)
-	{
-		btn = GetComponent<Button> ();
-		btnCol = btn.colors;
-		btnCol.fadeDuration = 0.5f;
-		if (wantAppear) 
-		{
-			btnCol.normalColor = new Color(255f, 255f, 255f, 1f);
-			btnCol.highlightedColor = new Color(255f, 255f, 255f, 1f);
-			btnCol.pressedColor = new Color(255f, 255f, 255f, 1f);
-			btn.colors = btnCol;
-			btn.interactable = true;
-		} 
-		else 
-		{
-			btn.interactable = false;
-			btnCol.normalColor = new Color(255f, 255f, 255f, 0f);
-			btnCol.highlightedColor = new Color(255f, 255f, 255f, 0f);
-			btnCol.pressedColor = new Color(255f, 255f, 255f, 0f);
-			btn.colors = btnCol;
-		}
 	}
 
 	public void fadeoff ()

@@ -5,13 +5,14 @@ using UnityEngine.UI;
 public class GeneralGameManager : MonoBehaviour {
 
 	public static GeneralGameManager instance = null;
-	public static int score = 0;
+	public static int score = 0; //TODO
 	public static bool paper = false;
 	public static bool hammer = false;
 	public static bool gun = false;
 	public static bool key = false;
-	public static int advance = 20; //TODO
-	public static int preg = 9; //TODO
+	public static bool apple = false;
+	public static int advance = 4;
+	public static int preg = 3;
 
 	void Awake ()
 	{
@@ -24,6 +25,7 @@ public class GeneralGameManager : MonoBehaviour {
 
 	public void PutQuestion()
 	{
+		//ButtonQuest.put = false;
 		string[] sentence;
 		string[] buttonsD;
 		switch (preg) 
@@ -171,7 +173,8 @@ public class GeneralGameManager : MonoBehaviour {
 		}
 
 		buttonsD = new string[]{"OpcA", "OpcB", "OpcC", "OpcD"};
-		GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (true);
+		if (GameObject.Find("FeedBack(Clone)") == null)
+			GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<GameManager> ().FeedBack ("");
 		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = sentence[0];
 		
 		for (int i = 1, k = sentence.Length ; i < k; i++) 
@@ -183,9 +186,8 @@ public class GeneralGameManager : MonoBehaviour {
 
 	public void QuestionDisable()
 	{
-		Debug.Log ("ENTER");
 		string[] buttonsD = {"OpcA", "OpcB", "OpcC", "OpcD"};
-		GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (false);
+		//GameObject.Find ("Out").gameObject.GetComponent<Inventory> ().Appear (false);
 		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = "";
 		
 		for (int i = 0; i < 4; i++) 

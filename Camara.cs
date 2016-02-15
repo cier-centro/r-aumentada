@@ -28,9 +28,9 @@ public class Camara : MonoBehaviour {
 		delayCamY = cam.ScreenToWorldPoint (new Vector3 (0f, (float)cam.pixelHeight, 0f)).y;
 		bg = background.GetComponent<Background> ();
 		minX = bg.PosX - bg.ImageSize.x / 2f;
-		maxX = minX + bg.ImageSize.x * bg.Size;
+		maxX = minX + bg.ImageSize.x;
 		minY = bg.PosY - bg.ImageSize.y / 2f;
-		maxY = minY + bg.ImageSize.y * bg.Size;
+		maxY = minY + bg.ImageSize.y;
 		camMax = maxX - delayCamX;
 		camMin = minX + delayCamX;
 		camMaxY = maxY - delayCamY;

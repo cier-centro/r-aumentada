@@ -32,9 +32,6 @@ public class Ask : Scenario {
 		this.gameObject.transform.localScale = new Vector3 (4f, 1.5f);
 		this.imageSize = sc.bounds.size;
 		GameObject dialog = GameObject.FindGameObjectWithTag ("Top");
-		dialog.gameObject.transform.localScale = new Vector3 (2f, 2f, 0f);
-		dialog.gameObject.GetComponent<Text> ().fontSize = 100;
-		dialog.gameObject.transform.position = new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2);
 		Instantiate (this, new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y + Camara.delayCamY - this.imageSize.y / 2), Quaternion.identity);
 	}
 }

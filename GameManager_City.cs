@@ -15,6 +15,7 @@ public class GameManager_City : MonoBehaviour {
 	public GameObject balloon;
 	public GameObject otherCharac;
 	public GameObject askChar;
+	public GameObject feedBack;
 	
 	public static float xMax;
 	public static float xMin;
@@ -31,6 +32,7 @@ public class GameManager_City : MonoBehaviour {
 	private OtherChar other;
 	private ButtonMv btn;
 	private Items itm;
+	private Real fb;
 	
 	private AudioSource backSound;
 	private AudioSource globoSound;
@@ -296,6 +298,16 @@ public class GameManager_City : MonoBehaviour {
 		askAsker.Put ();
 		globoSound.Play ();
 		StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (2f, textTop));
+	}
+
+	public void FeedBack(string textFB)
+	{
+		RemoveButtons ();
+		fb = feedBack.GetComponent<Real>();
+		fb.Image = "globo 02";
+		fb.Put ();
+		globoSound.Play ();
+		StartCoroutine (GameObject.Find ("FeedBack(Clone)").gameObject.GetComponent<Real> ().Anim (4f, textFB));
 	}
 	
 	void ConversationSeq (int i)

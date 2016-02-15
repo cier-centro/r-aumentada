@@ -52,7 +52,7 @@ public class ButtonQuest : MonoBehaviour {
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Es un deber de tu coordinador sancionar los estudiantes más problemáticos, pero esta sanción no puede atentar contra tu bienestar físico y mental o el de tus compañeros.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Es un deber de tu coordinador sancionar los estudiantes más problemáticos, pero esta sanción no puede atentar contra tu bienestar físico y mental o el de tus compañeros.");
 			}
 			else if (this.name == "OpcB")
 			{
@@ -62,19 +62,19 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Es un deber de tu coordinador prevenir que los estudiantes incumplan las normas, pero esta prevención no puede atentar contra tu bienestar físico y mental o el de tus compañeros.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Es un deber de tu coordinador prevenir que los estudiantes incumplan las normas, pero esta prevención no puede atentar contra tu bienestar físico y mental o el de tus compañeros.");
 			}
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Es un deber de tu coordinador proteger el bienestar físico y mental de los estudiantes, pero esto no significa que tú o tus compañeros estén exentos de las normas de tu manual de convivencia.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Es un deber de tu coordinador proteger el bienestar físico y mental de los estudiantes, pero esto no significa que tú o tus compañeros estén exentos de las normas de tu manual de convivencia.");
 			}
 			break;
 		case 4:
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("No atentar contra tus derechos, y no atentar contra tu dignidad  obedecen  al mismo sentido de proteger tu bienestar físico y mental.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("No atentar contra tus derechos, y no atentar contra tu dignidad  obedecen  al mismo sentido de proteger tu bienestar físico y mental.");
 			}
 			else if (this.name == "OpcB")
 			{
@@ -84,7 +84,7 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Que seas sancionado en público y seas sancionado frente a otros obedece al mismo sentido de buscar una reprimenda en frente de todos los demás.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Que seas sancionado en público y seas sancionado frente a otros obedece al mismo sentido de buscar una reprimenda en frente de todos los demás.");
 			}
 			else if (this.name == "OpcD")
 			{
@@ -96,12 +96,12 @@ public class ButtonQuest : MonoBehaviour {
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Recuerda que entre las funciones de tu personero no se encuentra la de sancionar directamente los docentes.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Recuerda que entre las funciones de tu personero no se encuentra la de sancionar directamente los docentes.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Recuerda que tu personero además de organizar jornadas de convivencia tiene la función de representar tus intereses.");	
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Recuerda que tu personero además de organizar jornadas de convivencia tiene la función de representar tus intereses.");	
 			}
 			else if (this.name == "OpcC")
 			{
@@ -111,19 +111,19 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Recuerda que tu personero además de contribuir al cumplimiento de las normas debe darle prioridad a los problemas de los estudiantes.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Recuerda que tu personero además de contribuir al cumplimiento de las normas debe darle prioridad a los problemas de los estudiantes.");
 			}
 			break;
 		case 6:
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Recuerda que el consejo de estudiantes no puede realizar un llamado de atención directo a los docentes.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Recuerda que el consejo de estudiantes no puede realizar un llamado de atención directo a los docentes.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Es cierto que el consejo académico puede evaluar el desempeño de tus docentes pero ¿para qué te serviría en esta situación?");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Es cierto que el consejo académico puede evaluar el desempeño de tus docentes pero ¿para qué te serviría en esta situación?");
 			}
 			else if (this.name == "OpcC")
 			{
@@ -152,17 +152,17 @@ public class ButtonQuest : MonoBehaviour {
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("El profesor no mostrò signos de temor y miedo sino de rabia e indignación.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("El profesor no mostrò signos de temor y miedo sino de rabia e indignación.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Las agresiones que tú realizas sobre los adultos también tienen consecuencias negativas ¡ponte en su lugar!");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Las agresiones que tú realizas sobre los adultos también tienen consecuencias negativas ¡ponte en su lugar!");
 			}
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Para ti puede parecer un juego, pero para tu profesor es decepcionante que tú lo agredas ¡ponte en su lugar!");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Para ti puede parecer un juego, pero para tu profesor es decepcionante que tú lo agredas ¡ponte en su lugar!");
 			}
 			else if (this.name == "OpcD")
 			{
@@ -174,12 +174,12 @@ public class ButtonQuest : MonoBehaviour {
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Como Andrea supone que ella no es nada buena en el fútbol y supone que ellos juegan mucho es probable que no quiera jugar.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Como Andrea supone que ella no es nada buena en el fútbol y supone que ellos juegan mucho es probable que no quiera jugar.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Como Juan supone que ellos son tramposos es probable que no quiera jugar.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Como Juan supone que ellos son tramposos es probable que no quiera jugar.");
 			}
 			else if (this.name == "OpcC")
 			{
@@ -189,7 +189,7 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Como Andrea supone que no es buena jugando y Juan cree que ellos son gente tramposa es probable que ninguno de los dos juegue.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Como Andrea supone que no es buena jugando y Juan cree que ellos son gente tramposa es probable que ninguno de los dos juegue.");
 			}
 			break;
 		case 10:
@@ -201,29 +201,29 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Los 3, no deben cancelar la apertura de los ensayaderos el lunes en la mañana.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Los 3, no deben cancelar la apertura de los ensayaderos el lunes en la mañana.");
 			}
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Los 2, no deben cerrar su actividad de la 1:00 p.m. en el parque el Rosal.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Los 2, no deben cerrar su actividad de la 1:00 p.m. en el parque el Rosal.");
 			}
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Los 3, no deben cancelar la apertura de los ensayaderos el lunes en la mañana. Y los 2, no deben cerrar su actividad de la 1:00 p.m. en el parque el Rosal.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Los 3, no deben cancelar la apertura de los ensayaderos el lunes en la mañana. Y los 2, no deben cerrar su actividad de la 1:00 p.m. en el parque el Rosal.");
 			}
 			break;
 		case 11:
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Esta es una función de la junta de acción comunal.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Esta es una función de la junta de acción comunal.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Esta es una función de la junta de acción comunal.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Esta es una función de la junta de acción comunal.");
 			}
 			else if (this.name == "OpcC")
 			{
@@ -233,14 +233,14 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Esta es una función de la junta de acción comunal.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Esta es una función de la junta de acción comunal.");
 			}
 			break;
 		case 12:
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("El edil como todos los representantes del ejecutivo, está sujeto a las normas constitucionales.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("El edil como todos los representantes del ejecutivo, está sujeto a las normas constitucionales.");
 			}
 			else if (this.name == "OpcB")
 			{
@@ -250,12 +250,12 @@ public class ButtonQuest : MonoBehaviour {
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("El Alcalde como todos los representantes del ejecutivo, está sujeto a las normas constitucionales.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("El Alcalde como todos los representantes del ejecutivo, está sujeto a las normas constitucionales.");
 			}
 			else if (this.name == "OpcD")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("Aunque la constitución promulga el derecho a protestar el grupo de chicos busca es difundir la información.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().FeedBack("Aunque la constitución promulga el derecho a protestar el grupo de chicos busca es difundir la información.");
 			}
 			break;
 		case 13:

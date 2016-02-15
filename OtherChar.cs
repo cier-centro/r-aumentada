@@ -27,7 +27,7 @@ public class OtherChar : Character {
 		base.Put ();
 		rigidPlayer = gameObject.GetComponent<Rigidbody2D> ();
 		sc.gameObject.layer = 9;
-		sc.sortingOrder = 2;
+		sc.sortingOrder = 5;
 		this.tag = "Other";
 		rigidPlayer.isKinematic = !this.solid;
 		rigidPlayer.mass = 100f;

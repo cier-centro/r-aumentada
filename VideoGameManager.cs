@@ -18,6 +18,8 @@ public class VideoGameManager : MonoBehaviour {
 		if (time > 8f) 
 		{
 			GeneralGameManager.advance++;
+			if (togo == 8)//TODO
+				GeneralGameManager.advance = 20;
 			Application.LoadLevel (togo);
 		}
 	}
