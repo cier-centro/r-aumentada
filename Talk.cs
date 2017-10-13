@@ -26,7 +26,7 @@ public class Talk : Scenario {
 		{
 			while (Mathf.Abs(this.gameObject.transform.localScale.y) <= Mathf.Abs(finalSize)) 
 			{	
-				this.gameObject.transform.localScale += new Vector3 (finalSize / Mathf.Abs (finalSize) * 0.1f, 0.1f, 0f);
+				this.gameObject.transform.localScale += new Vector3 (finalSize / Mathf.Abs (finalSize) * 0.09f, 0.1f, 0f);
 				yield return null;
 			}
 			GameObject dialog = GameObject.FindGameObjectWithTag("Conversation");
@@ -48,6 +48,5 @@ public class Talk : Scenario {
 		else
 			dialog.gameObject.transform.position = new Vector3(this.PosX + this.imageSize.x / 100f, this.posY + this.imageSize.y * 0.6f, 0f);
 		Instantiate (this, new Vector3 (this.posX, this.posY, 0f), Quaternion.identity);
-
 	}
 }

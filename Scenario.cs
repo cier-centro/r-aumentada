@@ -82,9 +82,12 @@ public class Scenario : MonoBehaviour {
 	{
 		if (this.gameObject != null) 
 		{
-			while (Mathf.Abs(this.gameObject.transform.localScale.x) <= Mathf.Abs(finalSize)) 
-			{	
-				this.gameObject.transform.localScale += new Vector3 (0.1f * vel, 0.1f * vel, 1f);
+			while (Mathf.Abs(this.gameObject.transform.localScale.y) <= Mathf.Abs(finalSize)) 
+			{
+				if (this.gameObject.transform.localScale.x < 0f)
+					this.gameObject.transform.localScale += new Vector3 (-0.1f * vel, 0.1f * vel, 1f);
+				else
+					this.gameObject.transform.localScale += new Vector3 (0.1f * vel, 0.1f * vel, 1f);
 				yield return null;
 			}
 		}

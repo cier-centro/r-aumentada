@@ -60,5 +60,18 @@ public class Inventory : MonoBehaviour {
 		time += Time.deltaTime;
 		if (time <= 2 * Time.deltaTime && (this.name == "Out" || this.name == "Out2"))
 			this.fadein ();
+        if (time <= 2 * Time.deltaTime && (this.name == "Out" || this.name == "Out2"))
+            this.fadein();
+        if (Application.loadedLevelName == "Profesores")
+        {
+            if (time > 4f)
+            {
+                GetComponent<Image>().enabled = false;
+                GameObject.FindGameObjectWithTag("asc").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ascensor");
+                GameObject.FindGameObjectWithTag("asc2").GetComponent<SpriteRenderer>().enabled = false;
+                GameObject.FindGameObjectWithTag("asc3").GetComponent<SpriteRenderer>().enabled = true;
+
+            }
+        }
 	}
 }

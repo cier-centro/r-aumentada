@@ -13,12 +13,12 @@ public class VideoGameManager : MonoBehaviour {
 
 	void FixedUpdate () {
 		time += Time.deltaTime;
-		if (time >= 5f) 
+		if (time >= 2f) //Tiempo para iniciar trancisión
 			GameObject.Find ("Out2").GetComponent<Inventory> ().fadeoff ();
-		if (time > 8f) 
+		if (time > 24f) //Tiempo para pasar a otra escena
 		{
 			GeneralGameManager.advance++;
-			if (togo == 8)//TODO
+			if (togo == 13)//8 TO DO
 				GeneralGameManager.advance = 20;
 			Application.LoadLevel (togo);
 		}

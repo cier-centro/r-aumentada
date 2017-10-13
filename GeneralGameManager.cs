@@ -11,8 +11,8 @@ public class GeneralGameManager : MonoBehaviour {
 	public static bool gun = false;
 	public static bool key = false;
 	public static bool apple = false;
-	public static int advance = 4;
-	public static int preg = 3;
+	public static int advance = 4;//20
+	public static int preg = 3; //9
 
 	void Awake ()
 	{
@@ -103,17 +103,18 @@ public class GeneralGameManager : MonoBehaviour {
 			sentence = new string[]{
 				"¿Con cuáles de los amigos puedes contar para jugar el partido?",
 				"Hermana y Camilo.",
-				"Niño nuevo y Andrea",
-				"Andrea y Camilo",
+				"Niño nuevo y Maria",
+				"Maria y Camilo",
 				"Juan y Hermana"
 			};
 			break;
 		case 10:
 			sentence = new string[]{
-				"",
-				"",
-				"",
-				""
+				"De acuedo con las medidas tomadas por los reidentes del lugar ¿cuáles de los siguientes grupos tendrán que cancelar sus actividades?",
+				"Los 1 y 2",
+				"Los 1 y 3",
+				"Los 2 y 4",
+				"Los 2 y 3"
 			};
 			break;
 		case 11:
@@ -138,7 +139,7 @@ public class GeneralGameManager : MonoBehaviour {
 			sentence = new string[]{
 				"¿Qué amigo crees que tiene la razón?",
 				"El Líder local, porque se sabe que hay personas favorecidas por la posición de sus padres.",
-				"Andrea, porque si van a decirles que se salgan de la pista hay que traer más gente por si se surge un conflicto.",
+				"Maria, porque si van a decirles que se salgan de la pista hay que traer más gente por si se surge un conflicto.",
 				"El Niño nuevo, porque si la policía que es la encargada de fomentar el orden no hace nada, ellos no deben involucrarse.",
 				"La hermana, porque ellos deben procurar que sus compañeros de barrio cumplan los acuerdos."
 			};
@@ -173,8 +174,17 @@ public class GeneralGameManager : MonoBehaviour {
 		}
 
 		buttonsD = new string[]{"OpcA", "OpcB", "OpcC", "OpcD"};
-		if (GameObject.Find("FeedBack(Clone)") == null)
-			GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<GameManager> ().FeedBack ("");
+		if (GameObject.Find ("FeedBack(Clone)") == null) 
+		{
+			if (GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<GameManager> () != null)
+				GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<GameManager> ().FeedBack ("");
+			else if (GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<ClassroomGameManager> () != null)
+				GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<ClassroomGameManager> ().FeedBack ("");
+			else
+				GameObject.FindGameObjectWithTag ("GameController").gameObject.GetComponent<GameManager_City> ().FeedBack ("");
+		}
+			
+
 		GameObject.Find ("TextQuestion").gameObject.GetComponent<Text> ().text = sentence[0];
 		
 		for (int i = 1, k = sentence.Length ; i < k; i++) 

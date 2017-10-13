@@ -24,8 +24,7 @@ public class GameManagerPac : MonoBehaviour {
     static public int score;
 
     public static AudioSource sonfon;
-
-  
+      
     private static GameManagerPac _instance;
 
     public static GameManagerPac instance
@@ -45,10 +44,13 @@ public class GameManagerPac : MonoBehaviour {
 
     void Awake()
     {
+//#if UNITY_EDITOR
+		//Application.LoadLevel(9);
+//#endif
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(this);
+           // DontDestroyOnLoad(this);
         }
 
 
@@ -57,13 +59,12 @@ public class GameManagerPac : MonoBehaviour {
 
 	void Start () 
 	{
-#if UNITY_EDITOR
-		Application.LoadLevel(4);
-#endif
+
 		gameState = GameState.Init;
         sonfon = gameObject.AddComponent<AudioSource>();
         sonfon.clip = Resources.Load("mjuego_pacman_01") as AudioClip;
-        sonfon.Play();          
+        sonfon.Play();
+        sonfon.loop = true;
     }
 
     void OnLevelWasLoaded()
@@ -96,8 +97,14 @@ public class GameManagerPac : MonoBehaviour {
 
         if (lives == 0)
         {
-            sonfon.Stop();  
-            Application.LoadLevel(3);
+            ProfeMove2.speedprofe = 0.3f;             
+            Application.LoadLevel(10);
+        }
+
+        if (Puerta.fin)
+        {
+            //Application.Quit();
+            sonfon.Stop();
         }
 	}
 

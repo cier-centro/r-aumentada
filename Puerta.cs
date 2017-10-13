@@ -18,8 +18,11 @@ public class Puerta : MonoBehaviour {
    {
        //Si la puerta recibe la colisión de un objeto llamado Player, termina.
        if (co.name == "pacman" && Puntaje.scoreP == 4 && Puntaje.scoreY == 1)
-       {           
-           Application.LoadLevel(4);
+       {
+           //audio.clip = Resources.Load("mjuego_ganar") as AudioClip;
+           fin = true;
+           Application.LoadLevel(9);//4
+           
        }
    }
 

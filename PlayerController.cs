@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public static int killstreak = 0;
     private GameManagerPac GM;
-    private Vector2 inicio = new Vector2(69.14f, -58.79f);
+    private Vector2 inicio = new Vector2(75f, -55f);
     
 
     private bool _deadPlaying = false;
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetDestination()
     {
-        _dest = new Vector2(69.14f, -58.79f);
+		_dest = new Vector2(75f, -54f);
         GetComponent<Animator>().SetFloat("DirX", 0);
         GetComponent<Animator>().SetFloat("DirY", 0);
     }

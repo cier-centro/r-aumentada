@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ButtonMv : Scenario {
 
@@ -42,6 +43,11 @@ public class ButtonMv : Scenario {
 		{
 			if (this.ClickLimits(Input.mousePosition))
 			{
+				if (GameObject.FindWithTag("Talk") != null)
+				{
+					GameObject.FindGameObjectWithTag("Talk").gameObject.GetComponent<Talk>().Active(false);
+					GameObject.FindGameObjectWithTag("Conversation").gameObject.GetComponent<Text>().text = "";
+				}
 				if (this.gameObject.tag == "B" && GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().isGround ())
 					GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Jump ();
 				if (this.gameObject.tag == "Left")
@@ -70,6 +76,11 @@ public class ButtonMv : Scenario {
 			{
 				if (this.ClickLimits (myTouches[i].position))
 				{
+					if (GameObject.FindWithTag("Talk") != null)
+					{
+						GameObject.FindGameObjectWithTag("Talk").gameObject.GetComponent<Talk>().Active(false);
+						GameObject.FindGameObjectWithTag("Conversation").gameObject.GetComponent<Text>().text = "";
+					}
 					if (this.gameObject.tag == "B" && GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().isGround ())
 						GameObject.FindGameObjectWithTag ("Player").gameObject.GetComponent<Player> ().Jump ();
 					if (this.gameObject.tag == "Left")

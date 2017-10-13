@@ -8,7 +8,7 @@ public class Items : Scenario {
 	private bool isVisible = true;
 	private bool clickOt = false;
 	private float time2 = -10f;
-	private int togo = 0;
+	private int togo = 5;
 
 	public int Lay {
 		get {
@@ -62,13 +62,24 @@ public class Items : Scenario {
 			for (int i = 0, k = other.Length; i < k; i++)
 			{
 				if (other[i].gameObject.GetComponent<OtherChar>().ClickLimits(Input.mousePosition))
+				{
 					clickOt = true;
+					break;
+				}
 			}
 
 			if (this.ClickLimits(Input.mousePosition) && !clickOt)
 			{
 				if (this.name == "Locker(Clone)")
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Esto es un locker");
+				{
+					if (GameObject.Find("Manzana(Clone)") != null)
+					{
+						if (!GameObject.Find("Manzana(Clone)").gameObject.GetComponent<Items>().ClickLimits(Input.mousePosition))
+							StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Esto es un locker"));
+					}
+					else
+						StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Esto es un locker"));
+				}
 
 				else if (this.name == "LockerabiertoDer(Clone)" && this.gameObject.GetComponent<SpriteRenderer>().color.a == 0f)
 				{
@@ -82,7 +93,7 @@ public class Items : Scenario {
 
 				else if (this.name == "Manzana(Clone)" && this.gameObject.GetComponent<SpriteRenderer>().color.a == 1f)
 				{
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("¡Has conseguido una manzana!");
+					StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("¡Has conseguido una manzana!"));
 					GeneralGameManager.advance++;
 					this.Active(false);
 				}
@@ -91,25 +102,25 @@ public class Items : Scenario {
 				{
 					if (GeneralGameManager.hammer)
 					{
-						GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("¡Pudiste desbloquear la puerta!");
+						StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("¡Pudiste desbloquear la puerta!"));
 						GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().PutNew("DoorPacman", "puertaPacman", false, 25.05f, 1.09f);
 						this.Active(false);
 					}
 					else
-						GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Parece que la puerta esta bloqueada. Con la herramienta adecuada se puede abrir.");
+						StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Parece que la puerta esta bloqueada. Con la herramienta adecuada se puede abrir."));
 				}
 
 				else if (this.name == "Personerocerrado(Clone)")
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Parece que esta oficina esta bloqueada. Pero se escuchan ruidos.");
+					StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Parece que esta oficina esta bloqueada. Pero se escuchan ruidos."));
 
 				else if (this.name == "Organico(Clone)")
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Orgánico");
+					StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Orgánico"));
 
 				else if (this.name == "Papel(Clone)")
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Papel");
+					StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Papel"));
 
 				else if (this.name == "Plastico(Clone)")
-					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Plástico");
+					StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Plástico"));
 
 				else if (this.name == "Candado(Clone)")
 				{
@@ -122,42 +133,130 @@ public class Items : Scenario {
 							GameObject.Find("Personerocerrado(Clone)").gameObject.GetComponent<Items>().Active(false);
 						}
 						else
-							GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Estoy ocupado,vuelve luego.");
+							StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("Estoy ocupado,vuelve luego."));
 					}
 					else
-						GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("No tienes la llave para abrirlo.");
+						StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().TopBall("No tienes la llave para abrirlo."));
 				}
 
 				else if (this.name == "CanecaAbierta(Clone)")
-					StartCoroutine(GameObject.Find("Encapuchado(Clone)").gameObject.GetComponent<OtherChar>().Anim(0.5f, 1f));
+				{
+					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().PutNew("CanecaAbierta2", "canecaAbierta", false, 20.9f, -0.63f);
+					this.gameObject.GetComponent<Items>().Active(false);
+				}
+
+				else if (this.name == "CanecaAbierta2(Clone)")
+				{
+					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().PutNew("Encapuchado", "encapuchado_total", true, 20.8f, -1.39f, 0.5f);
+					StartCoroutine(GameObject.Find("Encapuchado(Clone)").gameObject.GetComponent<OtherChar>().AnimEnc());
+				}
 
 				else if (this.name == "Patio(Clone)" && GeneralGameManager.advance == 5)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 					time2 = Time.time;
-					togo = 1;
+					togo = 6;//1
 				}
 
 				else if (this.name == "DoorPacman(Clone)" && GeneralGameManager.hammer && GeneralGameManager.advance == 8)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 					time2 = Time.time;
-					togo = 2;
+					togo = 7;//2
 				}
 
-				else if (this.name == "Personero(Clone)" && GeneralGameManager.advance == 17)
+				else if (this.name == "ClassRoomClose(Clone)" && GeneralGameManager.advance == 18)
+				{
+					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().PutNew("ClassroomOpen", "PuertaColegioFinal", false, 50.4f, 1.09f);
+					this.Active(false);
+				}
+
+				else if (this.name == "ClassroomOpen(Clone)" && GeneralGameManager.advance == 18)
 				{
 					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
 					time2 = Time.time;
-					togo = 5;
+					togo = 12;//7
 				}
 
-				else if (this.name == "ClassroomDoor(Clone)" && GeneralGameManager.advance == 18)
+				//----------------------------------------------------------------------------------------------------------
+
+				else if (this.name == "Cartel1(Clone)")
 				{
-					GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
-					time2 = Time.time;
-					togo = 7;
+					this.gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
+					this.gameObject.transform.localScale = new Vector3 (1.5f, 1.5f, 0f);
 				}
+
+				else if (this.name == "Cartel2(Clone)")
+				{
+					this.gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
+					this.gameObject.transform.localScale = new Vector3 (1.5f, 1.5f, 0f);
+				}
+
+				else if (this.name == "CartelSebusca(Clone)")
+				{
+					this.gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
+					this.gameObject.transform.localScale = new Vector3 (0.55f, 0.55f, 0f);
+				}
+
+				else if (this.name == "Skatepark(Clone)")
+				{
+					if (GeneralGameManager.advance == 29)
+					{
+						GameObject.Find("Out").GetComponent<Inventory>().fadeoff();
+						time2 = Time.time;
+						togo = 14;//7
+					}
+					else
+						StartCoroutine(GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().TopBall("¡Aún no ha abierto!"));
+				}
+
+				else if (this.name == "EncapuchadoBols(Clone)")
+				{
+					this.Active(false);
+					GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager_City>().PutNew("Encapuchado", "encapuchado_total", true, 50f, -2.6f, 0.5f);
+					GameObject.Find("Encapuchado(Clone)").gameObject.GetComponent<OtherChar>().AnimEnc();
+				}
+
+				else if (this.name == "Intercom(Clone)" && GeneralGameManager.advance == 35)
+				{
+					this.gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
+					this.gameObject.transform.localScale = new Vector3 (1.5f, 1.5f, 0f);
+				}
+			}
+			else
+			{
+				if (this.name == "Cartel1(Clone)" && this.gameObject.transform.localScale.x >= 1f)
+				{
+					GameObject.Find("Cartel1(Clone)").gameObject.transform.position = new Vector3(-48.259f, 0.076f);
+					GameObject.Find("Cartel1(Clone)").gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+					GameObject.Find("Cartel1(Clone)").gameObject.transform.localScale = new Vector3(0.313f, 0.313f, 0f);
+				}
+
+				else if (this.name == "Cartel2(Clone)" && this.gameObject.transform.localScale.x >= 1f)
+				{
+					GameObject.Find("Cartel2(Clone)").gameObject.transform.position = new Vector3(-39.477f, -0.821f);
+					GameObject.Find("Cartel2(Clone)").gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+					GameObject.Find("Cartel2(Clone)").gameObject.transform.localScale = new Vector3(0.313f, 0.313f, 0f);
+				}
+
+				else if (this.name == "CartelSebusca(Clone)" && this.gameObject.transform.localScale.x >= 0.5f)
+				{
+					GameObject.Find("CartelSebusca(Clone)").gameObject.transform.position = new Vector3(-46.25f, -0.53f);
+					GameObject.Find("CartelSebusca(Clone)").gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+					GameObject.Find("CartelSebusca(Clone)").gameObject.transform.localScale = new Vector3(0.071f, 0.071f, 0f);
+				}
+
+				else if (this.name == "Intercom(Clone)" && this.gameObject.transform.localScale.x >= 1.3f)
+				{
+					GameObject.Find("Intercom(Clone)").gameObject.transform.position = new Vector3(65.93f, 0.87f);
+					GameObject.Find("Intercom(Clone)").gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+					GameObject.Find("Intercom(Clone)").gameObject.transform.localScale = new Vector3(0.366f, 0.366f, 0f);
+                    Application.LoadLevel(17);
+                }
 			}
 		}
 	}

@@ -25,7 +25,7 @@ public class ButtonUI : MonoBehaviour {
 		} 
 		else if (!show && !showUI)
 		{
-			limit = 6.2f;
+			limit = 7f;
 			sign = 1;
 		}
 

@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
 	private GameObject[] objects;
 	private bool isTalking;
 	private bool dirTalk = true;
+	private bool encap = false;
 	private float time;
 	private float time2;
 
@@ -124,25 +125,24 @@ public class GameManager : MonoBehaviour {
 	
 	void PutCharacters()
 	{
-		string[] names = {"Maria", "Camilo", "Nicky", "Ronaldo", "Felipe", "Profesor", "Chepe", "Encapuchado", "Laura"};
+		string[] names = {"Maria", "Camilo", "Nicky", "Ronaldo", "Felipe", "Profesor", "Chepe", "Laura"};
 		string[] assets = {
 			"chica-2", //0
-			"chico-3", //1
+			"Camilo", //1
 			"bravucon-bully-mosntruo", //2
 			"bravucon-1-monstruo", //3
 			"bravucon-2-mosntruo", //4
 			"profesor2", //5
 			"chico-2", //6
-			"encapuchado_total", //7
 			"chica-1" //8
 		};
-		float[] positions = {-50f, -52f, -33f, -30.5f, -29f, 4.5f, 19.3f, 23f, 32.2f};
+		float[] positions = {-50f, -52f, -33f, -30.5f, -29f, 4.5f, 19.3f, 32.2f};
 		other = otherCharac.GetComponent<OtherChar> ();
 
 		for (int i = 0, k = names.Length; i < k; i++) 
 		{
 			other.name = names[i];
-			if (i == 5 || i == 6 || i == 8)
+			if (i ==1 || i == 5 || i == 6 || i == 7)
 				other.Size = 0.8f;
 			else
 				other.Size = 0.5f;
@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour {
 			"lockerIzq",
 			"lockerabiertoDer",
 			"manzana",
-			"canecaAbierta",
+			"caneca cerrada",
 			"tablones",
 			"personerocerrado",
 			"candado",
@@ -193,8 +193,8 @@ public class GameManager : MonoBehaviour {
 			"Patio"
 		};
 		float[] positionX = {-19f, -17.194f, -17.441f, 20.9f, 25.3f, 34f, 34f, 44.7f, 44.003f, 54f, 55.5f, 57f, 50.76f, 0f, 0f, 9.6f};
-		float[] positionY = {-0.56f, -0.324f, -0.037f, -0.63f, 0.63f, 0f, -1.18f, -0.56f, -0.33f, -1.84f, -1.84f, -1.84f, 0.63f, 0f, 0f, 1.3f};
-		int[] lay = {2, 3, 4, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 7, 7, 2};
+		float[] positionY = {-0.56f, -0.324f, -0.037f, -1.37f, 0.63f, 0f, -1.18f, -0.56f, -0.33f, -1.84f, -1.84f, -1.84f, 0.63f, 0f, 0f, 1.3f};
+		int[] lay = {2, 3, 4, 5, 2, 2, 3, 2, 3, 2, 2, 2, 2, 7, 7, 2};
 		bool[] visible = {true, false, false, true, true, true, true, true, false, false, false, false, false, true, true, false};
 		float[] sizes = {1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.35f, 0.35f, 0.35f, 1f, 1f, 1f, 3.8f};
 		itm = item.GetComponent<Items> ();
@@ -257,6 +257,8 @@ public class GameManager : MonoBehaviour {
 			itm.PosX = posx;
 			itm.PosY = posy;
 			itm.IsVisible = true;
+			if (name1 == "CanecaAbierta2")
+				itm.Lay = 5;
 			itm.Put();
 		}
 	}
@@ -285,13 +287,18 @@ public class GameManager : MonoBehaviour {
 			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (44f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
 			GameObject.Find ("Chepe(Clone)").gameObject.transform.position = new Vector3 (46f, GameObject.Find ("Chepe(Clone)").gameObject.transform.position.y);
 			GameObject.Find ("Laura(Clone)").gameObject.transform.position = new Vector3 (48f, GameObject.Find ("Laura(Clone)").gameObject.transform.position.y);
+			GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().PutNew("DoorPacman", "puertaPacman", false, 25.05f, 1.09f);
+			GameObject.Find ("Tablones(Clone)").gameObject.GetComponent<Items>().Active(false);
+			GameObject.Find ("CanecaAbierta(Clone)").gameObject.GetComponent<Items>().Active(false);
+			PutNew("Encapuchado", "caneca medio abierta", true, 20.9f, -1.3f);
 		}
 
-		if (GeneralGameManager.advance >= 17) 
+		if (GeneralGameManager.advance >= 18) 
 		{
 			GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position = new Vector3 (35f, GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y);
-			PutNew("Personero", "office", true, 34.9f, 0f, 2f);
-			GameObject.Find("Padlock(Clone)").gameObject.GetComponent<Items>().Active(false);
+			PutNew("Personero", "PersoneroAbierto", true, 34f, 0f);
+			GameObject.Find("Candado(Clone)").gameObject.GetComponent<Items>().Active(false);
+			GameObject.Find("Personerocerrado(Clone)").gameObject.GetComponent<Items>().Active(false);
 		}
 	}
 
@@ -361,7 +368,12 @@ public class GameManager : MonoBehaviour {
 			{
 				bln.Image = "globo 01";
 				bln.PosX = GameObject.Find(P[i] + "(Clone)").gameObject.transform.position.x;
-				bln.PosY = -1f;
+				if (P[i] == "Player")
+					bln.PosY = -2f;
+				else if (P[i] == "Personero")
+					bln.PosY = 1f;
+				else
+					bln.PosY = -1f;
 				bln.Size = 1.7f;
 				bln.Dir = direction;
 				bln.Put();
@@ -379,7 +391,7 @@ public class GameManager : MonoBehaviour {
 		{
 			while (!put)
 				yield return null;
-			TopBall (top);
+			StartCoroutine(TopBall (top));
 		}
 		if (plus)
 			GeneralGameManager.advance++;
@@ -388,14 +400,27 @@ public class GameManager : MonoBehaviour {
 		isTalking = false;
 	}
 	
-	public void TopBall(string textTop)
+	public IEnumerator TopBall(string textTop)
 	{
-		RemoveButtons ();
-		askAsker = askChar.GetComponent<Ask>();
-		askAsker.Image = "globo 02";
-		askAsker.Put ();
-		globoSound.Play ();
-		StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (2f, textTop));
+		bool topActive = false;
+
+		while (!topActive) 
+		{
+			if (GameObject.FindWithTag ("Dog") != null) 
+				GameObject.FindGameObjectWithTag ("Dog").gameObject.GetComponent<Ask> ().Active (false);
+			else
+			{
+				RemoveButtons ();
+				askAsker = askChar.GetComponent<Ask> ();
+				askAsker.Image = "globo 02";
+				askAsker.Put ();
+				globoSound.Play ();
+				StartCoroutine (GameObject.Find ("Ask(Clone)").gameObject.GetComponent<Ask> ().Anim (2f, textTop));
+				topActive = true;
+			}
+
+			yield return null;
+		}
 	}
 
 	public void FeedBack(string textFB)
@@ -405,7 +430,7 @@ public class GameManager : MonoBehaviour {
 		fb.Image = "globo 02";
 		fb.Put ();
 		globoSound.Play ();
-		StartCoroutine (GameObject.Find ("FeedBack(Clone)").gameObject.GetComponent<Real> ().Anim (4f, textFB));
+		StartCoroutine (GameObject.Find ("FeedBack(Clone)").gameObject.GetComponent<Real> ().Anim (4.5f, textFB));
 	}
 
 	void ConversationSeq (int i)
@@ -423,12 +448,13 @@ public class GameManager : MonoBehaviour {
 			{
 			case 0:
 				conv = new string[]{
-					"Últimamente profesores que tratan mal a sus estudiantes aparecen amarrados dentro de los salones.",
+					"Últimamente profesores que tratan mal a sus estudiantes",
+					"Aparecen amarrados dentro de los salones.",
 					"Esto debe ser obra del encapuchado. Nunca nadie lo ha visto.",
 					"El personero debería hacer algo ante esta situación, pero no hace nada. ",
 					"No digas nada pero me dijeron que hay un lugar custodiado y escondido en el colegio, repleto de libros.", 
 				};
-				boys = new string[]{"Maria", "Maria", "Camilo", "Maria"};
+				boys = new string[]{"Maria", "Maria", "Maria", "Camilo", "Maria"};
 				break;
 				
 			case 1:
@@ -461,9 +487,11 @@ public class GameManager : MonoBehaviour {
 			case 4:
 				conv = new string[]{
 					"Quién eres tu?",
-					"Hola. No importa quién soy. Lo importante ahora es detener lo que está pasando.",
+					"Hola. No importa quién soy.",
+					"Lo importante ahora es detener lo que está pasando.",
 					"Me gusta tu disfraz",
-					"¡No es un disfraz! Es mi traje de superhéroe vigilante con un pasado oscuro que lucha por la-verdad y la justicia.",
+					"¡No es un disfraz! Es mi traje de superhéroe vigilante",
+					"Con un pasado oscuro que lucha por la-verdad y la justicia.",
 					"Y ¿contra quién luchas?",
 					"Contra mi peor enemigo.",
 					"...",
@@ -473,7 +501,7 @@ public class GameManager : MonoBehaviour {
 					"Eres chistoso, te ayudaré. ¿Tienes alguna pista?",
 					"No, o sí. No lo sé, no puedo pensar con el estómago vacío."
 				};
-				boys = new string[]{"Player", "Encapuchado", "Player", "Encapuchado", "Player", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Encapuchado", "Player", "Encapuchado"};
+				boys = new string[]{"Player", "Encapuchado", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Player", "Encapuchado", "Player", "Encapuchado", "Encapuchado", "Encapuchado", "Player", "Encapuchado"};
 				break;
 
 			case 5:
@@ -585,77 +613,84 @@ public class GameManager : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		//Debug.Log ("Advance: " + GeneralGameManager.advance);
-		//Debug.Log ("Line: " + line);
-		//Debug.Log ("Time2: " + time2);
-		//Debug.Log ("BQ: " + ButtonQuest.put);
 		time += Time.deltaTime;
 		time2 += Time.deltaTime;
 		if (Input.GetMouseButtonDown (0)) 
 		{
-			if (!put && GameObject.FindWithTag("Talk") != null)
+			if (!put && GameObject.FindWithTag ("Talk") != null) 
 			{
 				put = true;
-				GameObject.FindGameObjectWithTag("Talk").gameObject.GetComponent<Talk>().Active(false);
-				GameObject.FindGameObjectWithTag("Conversation").gameObject.GetComponent<Text>().text = "";
-			}
-
-			else if (!isTalking)
+				GameObject.FindGameObjectWithTag ("Talk").gameObject.GetComponent<Talk> ().Active (false);
+				GameObject.FindGameObjectWithTag ("Conversation").gameObject.GetComponent<Text> ().text = "";
+			} 
+			else if (!isTalking) 
 			{
 				for (int i = 0, k = objects.Length; i <k; i++) 
 				{
-					if (objects [i].gameObject.GetComponent<OtherChar> ().ClickLimits (Input.mousePosition) && !GameObject.FindGameObjectWithTag("Left").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) &&
-					    !GameObject.FindGameObjectWithTag("Right").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && !GameObject.FindGameObjectWithTag("A").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition) && 
-					    !GameObject.FindGameObjectWithTag("B").gameObject.GetComponent<ButtonMv>().ClickLimits(Input.mousePosition))
-						ConversationSeq(i);
+					if (objects [i].gameObject.GetComponent<OtherChar> ().ClickLimits (Input.mousePosition) && !GameObject.FindGameObjectWithTag ("Left").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition) &&
+						!GameObject.FindGameObjectWithTag ("Right").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition) && !GameObject.FindGameObjectWithTag ("A").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition) && 
+						!GameObject.FindGameObjectWithTag ("B").gameObject.GetComponent<ButtonMv> ().ClickLimits (Input.mousePosition))
+						ConversationSeq (i);
 				}
 			}
 
-			if (GameObject.FindWithTag("Dog") != null)
+			if (GameObject.FindWithTag ("Dog") != null) 
 			{
-				if (GameObject.FindGameObjectWithTag("Dog").gameObject.GetComponent<Ask>() != null)
+				if (GameObject.FindGameObjectWithTag ("Dog").gameObject.GetComponent<Ask> () != null) 
 				{
-					GameObject.FindGameObjectWithTag("Dog").gameObject.GetComponent<Ask>().Active(false);
-					GameObject.FindGameObjectWithTag("Top").gameObject.GetComponent<Text>().text = "";
-				}
-				else
+					GameObject.FindGameObjectWithTag ("Dog").gameObject.GetComponent<Ask> ().Active (false);
+					GameObject.FindGameObjectWithTag ("Top").gameObject.GetComponent<Text> ().text = "";
+				} 
+				else 
 				{
-					GameObject.FindGameObjectWithTag("Dog").gameObject.GetComponent<Real>().Active(false);
-					GameObject.Find("TextReal").gameObject.GetComponent<Text>().text = "";
+					GameObject.FindGameObjectWithTag ("Dog").gameObject.GetComponent<Real> ().Active (false);
+					GameObject.Find ("TextReal").gameObject.GetComponent<Text> ().text = "";
 				}
 
-				if (GameObject.Find("Button(Clone)") == null)
+				if (GameObject.Find ("Button(Clone)") == null) 
 				{
 					time2 = 0f;
 					ButtonQuest.put = true;
-					PutMove();
+					PutMove ();
 				}
 			}
 		}
 
 		if (time > 1f && time < 1f + Time.fixedDeltaTime)
-			TopBall ("Mh.. el colegio también está extraño.. ¿que será esa cosa verde?");
+			StartCoroutine (TopBall ("Mh.. el colegio también está extraño.. ¿que será esa cosa verde?"));
 
 		if (line == 2 && GeneralGameManager.advance == 4) 
 			GameObject.Find ("Camilo(Clone)").gameObject.transform.position = new Vector3 (-1f, GameObject.Find ("Camilo(Clone)").gameObject.transform.position.y);
 
 		if (GeneralGameManager.advance == 6) 
 		{
-			GameObject[] finish = GameObject.FindGameObjectsWithTag("Finish");
-			for (int i = 0, k = finish.Length; i < k; i++)
+			GameObject[] finish = GameObject.FindGameObjectsWithTag ("Finish");
+			for (int i = 0, k = finish.Length; i < k; i++) 
 			{
-				if (finish[i].gameObject.transform.position.x >= 6.5f)
-					finish[i].gameObject.transform.position = new Vector3(xMax + 0.25f, finish[i].gameObject.transform.position.y);
+				if (finish [i].gameObject.transform.position.x >= 6.5f)
+					finish [i].gameObject.transform.position = new Vector3 (xMax + 0.25f, finish [i].gameObject.transform.position.y);
 			}
-			if (line == 4 && ButtonQuest.put & time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
-				GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
+			if (line == 4 && ButtonQuest.put && time2 >= 0.3f && time2 <= 0.3f + Time.deltaTime)
+				GameObject.FindGameObjectWithTag ("General").gameObject.GetComponent<GeneralGameManager> ().PutQuestion ();
 		}
 
-		if (GeneralGameManager.advance == 7 && line == 5)
+		if (GeneralGameManager.advance == 7 && line == 5) 
 			GeneralGameManager.apple = true;
 
-		if (GeneralGameManager.advance == 8 && line == 6)
-			GeneralGameManager.hammer = true;
+		if (GeneralGameManager.advance == 8) 
+		{
+			if (GameObject.Find("Encapuchado(Clone)") != null && !encap)
+			{
+				GameObject.Find("Encapuchado(Clone)").gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("caneca medio abierta");
+				GameObject.Find("Encapuchado(Clone)").gameObject.transform.position = new Vector3(20.9f, -1.3f);
+				GameObject.Find("Encapuchado(Clone)").gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+				encap = true;
+			}
+			if (GameObject.Find("CanecaAbierta2(Clone)") != null)
+				GameObject.Find("CanecaAbierta2(Clone)").gameObject.GetComponent<Items>().Active(false);
+			if (line == 6)
+				GeneralGameManager.hammer = true;
+		}
 
 		if (GeneralGameManager.advance == 10) 
 		{
@@ -663,16 +698,16 @@ public class GameManager : MonoBehaviour {
 			GeneralGameManager.key = true;
 		}
 
-		if (GeneralGameManager.advance == 11 && ButtonQuest.put & time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
+		if (GeneralGameManager.advance == 11 && ButtonQuest.put && time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
 			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 
-		if (GeneralGameManager.advance == 14 && ButtonQuest.put & time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
+		if (GeneralGameManager.advance == 14 && ButtonQuest.put && time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
 			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 
 		if (GeneralGameManager.advance == 15)
 			StartCoroutine(GameObject.Find ("Laura(Clone)").gameObject.GetComponent<OtherChar> ().Move (34f));
 
-		if (GeneralGameManager.advance == 16 && ButtonQuest.put & time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
+		if (GeneralGameManager.advance == 16 && ButtonQuest.put && time2 >= 0.3f & time2 <= 0.3f + Time.deltaTime)
 			GameObject.FindGameObjectWithTag("General").gameObject.GetComponent<GeneralGameManager>().PutQuestion();
 
 		if (Input.GetKey (KeyCode.Escape))

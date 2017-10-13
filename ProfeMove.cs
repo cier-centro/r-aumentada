@@ -22,14 +22,10 @@ public class ProfeMove : MonoBehaviour
         {
             Vector2 p = Vector2.MoveTowards(transform.position, waypoints[cur].position, speed);
             GetComponent<Rigidbody2D>().MovePosition(p);
-            Debug.Log("Punto: " + cur);
         }
         // Cuando encuentra el punto de ruta va al siguiente
         else
-        {
             cur = (cur + 1) % waypoints.Length;
-            Debug.Log("Punto: "+cur);
-        }
 
         // Actualiza las variables de la animación
         Vector2 dir = waypoints[cur].position - transform.position;

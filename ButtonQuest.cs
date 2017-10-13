@@ -152,17 +152,17 @@ public class ButtonQuest : MonoBehaviour {
 			if (this.name == "OpcA")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("El profesor no mostrò signos de temor y miedo sino de rabia e indignación.");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<ClassroomGameManager>().FeedBack("El profesor no mostrò signos de temor y miedo sino de rabia e indignación.");
 			}
 			else if (this.name == "OpcB")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Las agresiones que tú realizas sobre los adultos también tienen consecuencias negativas ¡ponte en su lugar!");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<ClassroomGameManager>().FeedBack("Las agresiones que tú realizas sobre los adultos también tienen consecuencias negativas ¡ponte en su lugar!");
 			}
 			else if (this.name == "OpcC")
 			{
 				ButtonQuest.put = false;
-				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<GameManager>().FeedBack("Para ti puede parecer un juego, pero para tu profesor es decepcionante que tú lo agredas ¡ponte en su lugar!");
+				GameObject.FindGameObjectWithTag("GameController").gameObject.GetComponent<ClassroomGameManager>().FeedBack("Para ti puede parecer un juego, pero para tu profesor es decepcionante que tú lo agredas ¡ponte en su lugar!");
 			}
 			else if (this.name == "OpcD")
 			{

@@ -21,7 +21,7 @@ public class Player : Character {
 	public override void Put()
 	{
 		base.Put ();
-		sc.sortingOrder = 6;
+		sc.sortingOrder = 7;
 		this.tag = "Player";
 		Instantiate (this, new Vector3 (this.posX, this.posY, 0f), Quaternion.identity);
 	}
